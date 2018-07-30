@@ -1,0 +1,19 @@
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+        <param name="plugin-icon">images/aservo.png</param>
+        <param name="plugin-logo">images/aservo.png</param>
+    </plugin-info>
+
+    <resource type="i18n" name="i18n" location="aservo-jira-confapi"/>
+
+    <web-resource key="aservo-confapi-jira-web-resource" name="ASERVO ConfAPI JIRA Web Resource">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        <dependency>com.atlassian.auiplugin:aui-experimental-expander</dependency>
+        <resource type="download" name="images/" location="/images"/>
+        <context>atl.general</context>
+    </web-resource>
+
+</atlassian-plugin>
