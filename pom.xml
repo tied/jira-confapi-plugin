@@ -176,7 +176,6 @@
         </plugins>
     </build>
 
-    <!--
     <repositories>
         <repository>
             <id>sonatype-oss</id>
@@ -208,6 +207,5 @@
             </releases>
         </pluginRepository>
     </pluginRepositories>
-    -->
 
 </project>
