@@ -1,5 +1,6 @@
 package de.aservo.atlassian.jira.confapi;
 
+import com.atlassian.jira.bc.license.JiraLicenseService;
 import com.atlassian.jira.bc.license.JiraLicenseService.ValidationResult;
 import com.atlassian.jira.bc.license.JiraLicenseUpdaterService;
 import com.atlassian.jira.license.JiraLicenseManager;
@@ -21,17 +22,17 @@ public class JiraApplicationHelper {
     private final JiraLicenseManager jiraLicenseManager;
 
     @ComponentImport
-    private final JiraLicenseUpdaterService jiraLicenseUpdaterService;
+    private final JiraLicenseService jiraLicenseService;
 
     @Inject
     public JiraApplicationHelper(
             final I18nHelper.BeanFactory i18nBeanFactory,
             final JiraLicenseManager jiraLicenseManager,
-            final JiraLicenseUpdaterService jiraLicenseUpdaterService) {
+            final JiraLicenseService jiraLicenseService) {
 
         this.i18nBeanFactory = i18nBeanFactory;
         this.jiraLicenseManager = jiraLicenseManager;
-        this.jiraLicenseUpdaterService = jiraLicenseUpdaterService;
+        this.jiraLicenseService = jiraLicenseService;
     }
 
     public LicenseDetails getLicense() {
@@ -42,12 +43,13 @@ public class JiraApplicationHelper {
             final String key) {
 
         final I18nHelper i18nHelper = i18nBeanFactory.getInstance(Locale.getDefault());
-        final ValidationResult validationResult = jiraLicenseUpdaterService.validate(i18nHelper, key);
+        final ValidationResult validationResult = jiraLicenseService.validate(i18nHelper, key);
 
         if (validationResult.getErrorCollection().hasAnyErrors()) {
             throw new IllegalArgumentException("Specified license was invalid.");
         }
 
+        final JiraLicenseUpdaterService jiraLicenseUpdaterService = (JiraLicenseUpdaterService) jiraLicenseService;
         return jiraLicenseUpdaterService.setLicense(validationResult);
     }
 }
