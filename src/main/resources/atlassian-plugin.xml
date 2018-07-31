@@ -9,11 +9,13 @@
 
     <resource type="i18n" name="i18n" location="aservo-jira-confapi"/>
 
-    <web-resource key="aservo-confapi-jira-web-resource" name="ASERVO ConfAPI JIRA Web Resource">
+    <web-resource key="aservo-confapi-jira-web-resource" name="ConfAPI Web Resource">
         <dependency>com.atlassian.auiplugin:ajs</dependency>
         <dependency>com.atlassian.auiplugin:aui-experimental-expander</dependency>
         <resource type="download" name="images/" location="/images"/>
         <context>atl.general</context>
     </web-resource>
+
+    <rest key="aservo-confapi-rest" name="ConfAPI REST" path="/confapi" version="1.0"/>
 
 </atlassian-plugin>

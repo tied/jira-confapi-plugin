@@ -63,6 +63,12 @@
             <artifactId>jira-rest-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.atlassian.jira</groupId>
+            <artifactId>jira-rest-plugin</artifactId>
+            <version>${jira.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>com.atlassian.plugins.rest</groupId>
             <artifactId>atlassian-rest-common</artifactId>
         </dependency>
@@ -118,6 +124,7 @@
                     <enableFastdev>false</enableFastdev>
                     <enableDevToolbox>false</enableDevToolbox>
                     <enablePde>false</enablePde>
+                    <!-- <extractDependencies>false</extractDependencies> -->
                     <skipRestDocGeneration>true</skipRestDocGeneration>
                     <skipManifestValidation>true</skipManifestValidation>
                     <allowGoogleTracking>false</allowGoogleTracking>
@@ -141,13 +148,9 @@
                         <Atlassian-Plugin-Key>${project.groupId}.${project.artifactId}</Atlassian-Plugin-Key>
                         <Spring-Context>*</Spring-Context>
                         <Import-Package>
-                            com.atlassian.jira.plugin.webfragment.conditions,
-                            com.atlassian.jira.action,
-                            com.atlassian.jira.util,
-                            com.atlassian.jira.web,
-                            com.atlassian.jira.web.util,
-                            webwork.action,
                             org.springframework.*;resolution:="optional",
+                            org.eclipse.gemini.*;resolution:="optional",
+                            *
                         </Import-Package>
                         <Export-Package/>
                     </instructions>
@@ -165,9 +168,15 @@
                     </products>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>com.atlassian.plugin</groupId>
+                <artifactId>atlassian-spring-scanner-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 
+    <!--
     <repositories>
         <repository>
             <id>sonatype-oss</id>
@@ -199,5 +208,6 @@
             </releases>
         </pluginRepository>
     </pluginRepositories>
+    -->
 
 </project>
