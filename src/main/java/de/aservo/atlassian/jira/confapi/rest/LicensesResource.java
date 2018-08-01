@@ -1,14 +1,18 @@
 package de.aservo.atlassian.jira.confapi.rest;
 
 import com.atlassian.jira.license.LicenseDetails;
+import com.atlassian.jira.rest.v2.issue.RESTException;
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 import de.aservo.atlassian.jira.confapi.JiraApplicationHelper;
 import de.aservo.atlassian.jira.confapi.JiraWebAuthenticationHelper;
+import de.aservo.atlassian.jira.confapi.bean.LicenseBean;
 import de.aservo.atlassian.jira.confapi.bean.LicensesBean;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -49,6 +53,21 @@ public class LicensesResource {
 
         final Collection<LicenseDetails> licenseDetails = applicationHelper.getLicenses();
         return Response.ok(LicensesBean.from(licenseDetails)).build();
+    }
+
+    @PUT
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Response setLicense(
+            final String licenseKey) {
+
+        webAuthenticationHelper.mustBeSysAdmin();
+
+        if (licenseKey == null) {
+            throw new RESTException(Response.Status.BAD_REQUEST, "No key given");
+        }
+
+        final LicenseDetails licenseDetail = applicationHelper.setLicense(licenseKey);
+        return Response.ok(LicenseBean.from(licenseDetail)).build();
     }
 
 }

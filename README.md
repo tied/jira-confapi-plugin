@@ -38,9 +38,46 @@ So again, an entered license key is always stored for all applications
 for which it is valid. The web interface might suggest that you can
 select the desired application, but this is not true.
 
-#### `/rest/confapi/1/license`
+#### `/rest/confapi/1/licenses`
 
-* `PUT /rest/confapi/1/license`
+* `GET /rest/confapi/1/licenses`
+
+  Get the license keys together with the application keys of the
+  applications using this license key.
+
+  __Responses__
+
+  ![Status 200][status-200]
+
+  ```javascript
+  {
+    "licenses": [
+      {
+        "key": "AAA...",
+        "applicationKeys": [
+          "jira-software"
+        ]
+      },
+      {
+        "key": "AAA...",
+        "applicationKeys": [
+          "jira-core",
+          "jira-servicedesk"
+        ]
+      }
+    ]
+  }
+  ```
+
+  ![Status 401][status-401]
+
+  Returned if the current user is not authenticated.
+
+  ![Status 403][status-403]
+
+  Returned if the current user is not an administrator.
+
+* `PUT /rest/confapi/1/licenses`
 
   Set a license by its license key.
 
@@ -71,45 +108,6 @@ select the desired application, but this is not true.
       "jira-core",
       "jira-servicedesk",
       "jira-software"
-    ]
-  }
-  ```
-
-  ![Status 401][status-401]
-
-  Returned if the current user is not authenticated.
-
-  ![Status 403][status-403]
-
-  Returned if the current user is not an administrator.
-
-#### `/rest/confapi/1/licenses`
-
-* `GET /rest/confapi/1/licenses`
-
-  Get the license keys together with the application keys of the
-  applications using this license key.
-
-  __Responses__
-
-  ![Status 200][status-200]
-
-  ```javascript
-  {
-    "licenses": [
-      {
-        "key": "AAA...",
-        "applicationKeys": [
-          "jira-software"
-        ]
-      },
-      {
-        "key": "AAA...",
-        "applicationKeys": [
-          "jira-core",
-          "jira-servicedesk"
-        ]
-      }
     ]
   }
   ```
