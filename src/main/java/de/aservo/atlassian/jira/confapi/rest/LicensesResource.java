@@ -1,7 +1,7 @@
 package de.aservo.atlassian.jira.confapi.rest;
 
 import com.atlassian.jira.license.LicenseDetails;
-import com.atlassian.sal.api.websudo.WebSudoRequired;
+import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 import de.aservo.atlassian.jira.confapi.JiraApplicationHelper;
 import de.aservo.atlassian.jira.confapi.JiraWebAuthenticationHelper;
 import de.aservo.atlassian.jira.confapi.bean.LicensesBean;
@@ -20,6 +20,7 @@ import java.util.Collection;
  * Licenses resource to get the licenses.
  */
 @Path("/licenses")
+@AnonymousAllowed
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Component
@@ -45,7 +46,6 @@ public class LicensesResource {
     }
 
     @GET
-    @WebSudoRequired
     public Response getLicenses() {
         webAuthenticationHelper.mustBeSysAdmin();
 

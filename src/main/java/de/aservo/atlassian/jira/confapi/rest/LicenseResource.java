@@ -2,7 +2,7 @@ package de.aservo.atlassian.jira.confapi.rest;
 
 import com.atlassian.jira.license.LicenseDetails;
 import com.atlassian.jira.rest.v2.issue.RESTException;
-import com.atlassian.sal.api.websudo.WebSudoRequired;
+import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 import de.aservo.atlassian.jira.confapi.JiraApplicationHelper;
 import de.aservo.atlassian.jira.confapi.JiraWebAuthenticationHelper;
 import de.aservo.atlassian.jira.confapi.bean.LicenseBean;
@@ -22,6 +22,7 @@ import javax.ws.rs.core.Response;
  * License resource to set a license.
  */
 @Path("/license")
+@AnonymousAllowed
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Component
@@ -47,7 +48,6 @@ public class LicenseResource {
     }
 
     @POST
-    @WebSudoRequired
     public Response setLicense(
             @Encoded @QueryParam("key") final String key) {
 
