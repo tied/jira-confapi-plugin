@@ -12,7 +12,7 @@ REST API for automated JIRA configuration.
 Resources
 ---------
 
-All resources produce JSON ("application/json") results.
+All resources produce JSON (media type:  `application/json`) results.
 
 ### License
 
@@ -46,7 +46,7 @@ select the desired application, but this is not true.
 
   __Request Body__
 
-  Media type: "text/plain"
+  Media type: `text/plain`
 
   Content: License key, for example:
 
