@@ -15,25 +15,26 @@ Resources
 ### License
 
 The JIRA license API is a bit weird and needs to be well understood.
-Just like in the web interface, different licenses can theoretically be
-set for each application (JIRA Core, JIRA Software, etc.). However, the
-entered license is always set for all applications for which it is
-valid.
+Just like in the web interface, different license keys can theoretically
+be set for each application (JIRA Core, JIRA Software, etc.). However,
+the entered license key is always set for all applications for which it
+is valid.
 
 For example:
 
-1. JIRA Core and JIRA Software both have their own license. If a license
-is now entered (in the web interface or via the REST API) with which
-both applications can be licensed, this license is stored for both
-applications.
+1. JIRA Core and JIRA Software each have their own license key. If a
+license key is now entered (in the web interface or via the REST API)
+with which both applications can be licensed, this license key is stored
+for both applications.
 
-2. JIRA Core and JIRA Software use a common license. If a license is now
-entered (in the web interface or via the REST API) with which only JIRA
-Core can be licensed, the license is also only stored for JIRA Core.
+2. JIRA Core and JIRA Software use a common license key. If a license
+key is now entered (in the web interface or via the REST API) with which
+only JIRA Core can be licensed, the license key is also only stored for
+JIRA Core.
 
-So again, an entered license is always stored for all applications for
-which it is valid. The web interface might suggest that you can select
-the desired application, but this is not true.
+So again, an entered license key is always stored for all applications
+for which it is valid. The web interface might suggest that you can
+select the desired application, but this is not true.
 
 #### `/rest/confapi/1/license`
 
@@ -49,42 +50,46 @@ the desired application, but this is not true.
 
   __Responses__
 
-  ```javascript
-  {
-    "key": "AAA...",
-    "applicationKeys": [
-      "jira-core",
-      "jira-servicedesk",
-      "jira-software"
-    ]
-  }
-  ```
+  * Status 200
+
+    ```javascript
+    {
+      "key": "AAA...",
+      "applicationKeys": [
+        "jira-core",
+        "jira-servicedesk",
+        "jira-software"
+      ]
+    }
+    ```
 
 #### `/rest/confapi/1/licenses`
 
 * `GET /rest/confapi/1/licenses`
 
   Get the license keys together with the application keys of the
-  applications using the license key.
+  applications using this license key.
 
   __Responses__
 
-  ```javascript
-  {
-    "licenses": [
-      {
-        "key": "AAA...",
-        "applicationKeys": [
-          "jira-software"
-        ]
-      },
-      {
-        "key": "AAA...",
-        "applicationKeys": [
-          "jira-core",
-          "jira-servicedesk"
-        ]
-      }
-    ]
-  }
-  ```
+  * Status 200
+
+    ```javascript
+    {
+      "licenses": [
+        {
+          "key": "AAA...",
+          "applicationKeys": [
+            "jira-software"
+          ]
+        },
+        {
+          "key": "AAA...",
+          "applicationKeys": [
+            "jira-core",
+            "jira-servicedesk"
+          ]
+        }
+      ]
+    }
+    ```
