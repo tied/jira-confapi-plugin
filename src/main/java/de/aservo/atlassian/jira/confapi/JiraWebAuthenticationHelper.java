@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 
 import static com.atlassian.jira.permission.GlobalPermissionKey.SYSTEM_ADMIN;
 
@@ -38,12 +39,12 @@ public class JiraWebAuthenticationHelper {
     public void mustBeSysAdmin() {
         final ApplicationUser user = authenticationContext.getLoggedInUser();
         if (user == null) {
-            throw new WebApplicationException();
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
 
         final boolean isSysAdmin = globalPermissionManager.hasPermission(SYSTEM_ADMIN, user);
         if (!isSysAdmin) {
-            throw new WebApplicationException();
+            throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
     }
 }
