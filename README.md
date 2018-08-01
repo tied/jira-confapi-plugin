@@ -47,6 +47,7 @@ select the desired application, but this is not true.
   __Request Body__
 
   Media type: "text/plain"
+
   Content: License key, for example:
 
   ```
