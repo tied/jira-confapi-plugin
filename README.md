@@ -50,7 +50,7 @@ select the desired application, but this is not true.
 
   __Responses__
 
-  * ![Status 200](status-200)
+  * ![Status 200][status-200]
 
     ```javascript
     {
@@ -63,13 +63,13 @@ select the desired application, but this is not true.
     }
     ```
 
-  * ![Status 401](status-401)
+  * ![Status 401][status-401]
 
-  Returned if the current user is not authenticated.
+    Returned if the current user is not authenticated.
 
-  * ![Status 403](status-403)
+  * ![Status 403][status-403]
 
-  Returned if the current user is not an administrator.
+    Returned if the current user is not an administrator.
 
 #### `/rest/confapi/1/licenses`
 
@@ -80,7 +80,7 @@ select the desired application, but this is not true.
 
   __Responses__
 
-  * ![Status 200](status-200)
+  * ![Status 200][status-200]
 
     ```javascript
     {
@@ -102,13 +102,13 @@ select the desired application, but this is not true.
     }
     ```
 
-  * ![Status 401](status-401)
+  * ![Status 401][status-401]
 
-  Returned if the current user is not authenticated.
+    Returned if the current user is not authenticated.
 
-  * ![Status 403](status-403)
+  * ![Status 403][status-403]
 
-  Returned if the current user is not an administrator.
+    Returned if the current user is not an administrator.
 
 [status-200]: https://img.shields.io/badge/status-200-brightgreen.svg
 [status-400]: https://img.shields.io/badge/status-400-red.svg
