@@ -12,6 +12,8 @@ REST API for automated JIRA configuration.
 Resources
 ---------
 
+All resources produce JSON ("application/json") results.
+
 ### License
 
 The JIRA license API is a bit weird and needs to be well understood.
@@ -38,15 +40,24 @@ select the desired application, but this is not true.
 
 #### `/rest/confapi/1/license`
 
-* `POST /rest/confapi/1/license`
+* `PUT /rest/confapi/1/license`
 
   Set a license by its license key.
 
+  __Request Body__
+
+  Media type: "text/plain"
+  Content: License key, for example:
+
+  ```
+  AAA...
+  ```
+
   __Request Parameters__
 
-  | parameter | type     | description |
-  | ----------| -------- | ----------- |
-  | `key`     | _string_ | license key |
+  | parameter   | type      | description         |
+  | ----------- | --------- | ------------------- |
+  | `clear`     | _boolean_ | Not implemented yet |
 
   __Responses__
 

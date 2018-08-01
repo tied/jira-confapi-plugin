@@ -8,7 +8,6 @@ import de.aservo.atlassian.jira.confapi.bean.LicensesBean;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -21,7 +20,6 @@ import java.util.Collection;
  */
 @Path("/licenses")
 @AnonymousAllowed
-@Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Component
 public class LicensesResource {

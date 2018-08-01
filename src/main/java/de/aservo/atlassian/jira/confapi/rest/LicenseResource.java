@@ -10,11 +10,9 @@ import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.Encoded;
-import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -23,7 +21,6 @@ import javax.ws.rs.core.Response;
  */
 @Path("/license")
 @AnonymousAllowed
-@Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Component
 public class LicenseResource {
@@ -47,17 +44,18 @@ public class LicenseResource {
         this.webAuthenticationHelper = webAuthenticationHelper;
     }
 
-    @POST
+    @PUT
+    @Consumes(MediaType.TEXT_PLAIN)
     public Response setLicense(
-            @Encoded @QueryParam("key") final String key) {
+            final String licenseKey) {
 
         webAuthenticationHelper.mustBeSysAdmin();
 
-        if (key == null) {
+        if (licenseKey == null) {
             throw new RESTException(Response.Status.BAD_REQUEST, "No key given");
         }
 
-        final LicenseDetails licenseDetail = applicationHelper.setLicense(key);
+        final LicenseDetails licenseDetail = applicationHelper.setLicense(licenseKey);
         return Response.ok(LicenseBean.from(licenseDetail)).build();
     }
 
