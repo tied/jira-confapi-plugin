@@ -6,9 +6,11 @@ import com.atlassian.jira.license.JiraLicenseManager;
 import com.atlassian.jira.license.LicenseDetails;
 import com.atlassian.jira.util.I18nHelper;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
+import com.google.common.collect.Lists;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import java.util.Collection;
 import java.util.Locale;
 
 @Component
@@ -34,8 +36,8 @@ public class JiraApplicationHelper {
         this.licenseService = licenseService;
     }
 
-    public LicenseDetails getLicense() {
-        return licenseManager.getLicenses().iterator().next();
+    public Collection<LicenseDetails> getLicenses() {
+          return Lists.newArrayList(licenseManager.getLicenses());
     }
 
     public LicenseDetails setLicense(
@@ -48,6 +50,6 @@ public class JiraApplicationHelper {
             throw new IllegalArgumentException("Specified license was invalid.");
         }
 
-        return licenseManager.clearAndSetLicenseNoEvent(validationResult.getLicenseString());
+        return licenseManager.setLicenseNoEvent(validationResult.getLicenseString());
     }
 }

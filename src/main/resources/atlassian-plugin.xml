@@ -16,6 +16,6 @@
         <context>atl.general</context>
     </web-resource>
 
-    <rest key="aservo-confapi-rest" name="ConfAPI REST" path="/confapi" version="1.0"/>
+    <rest key="aservo-confapi-rest" name="ConfAPI REST" path="/confapi" version="1"/>
 
 </atlassian-plugin>

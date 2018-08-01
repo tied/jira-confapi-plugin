@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 /**
- * Bean for {@link com.atlassian.jira.license.LicenseDetails} results in REST responses
+ * Bean for {@link com.atlassian.jira.license.LicenseDetails} results in REST responses.
  */
 @XmlRootElement(name = "license")
 public class LicenseBean {
@@ -41,13 +41,13 @@ public class LicenseBean {
     /**
      * Factory method for creating a bean from {@link LicenseDetails}.
      *
-     * @param licenseDetails the license details
+     * @param licenseDetail the license details
      */
     public static LicenseBean from(
-            final LicenseDetails licenseDetails) {
+            final LicenseDetails licenseDetail) {
 
-        final String key = licenseDetails.getLicenseString();
-        final Collection<String> applicationKeys = licenseDetails.getLicensedApplications().getKeys().stream()
+        final String key = licenseDetail.getLicenseString();
+        final Collection<String> applicationKeys = licenseDetail.getLicensedApplications().getKeys().stream()
                 .map(ApplicationKey::value)
                 .collect(Collectors.toSet());
 
