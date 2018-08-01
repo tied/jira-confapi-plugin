@@ -38,85 +38,85 @@ So again, an entered license key is always stored for all applications
 for which it is valid. The web interface might suggest that you can
 select the desired application, but this is not true.
 
-#### `GET /rest/confapi/1/licenses`
+* #### `GET /rest/confapi/1/licenses`
 
-Get the license keys together with the application keys of the
-applications using this license key.
+  Get the license keys together with the application keys of the
+  applications using this license key.
 
-__Responses__
+  __Responses__
 
-![Status 200][status-200]
+  ![Status 200][status-200]
 
-```javascript
-{
-  "licenses": [
-    {
-      "key": "AAA...",
-      "applicationKeys": [
-        "jira-software"
-      ]
-    },
-    {
-      "key": "AAA...",
-      "applicationKeys": [
-        "jira-core",
-        "jira-servicedesk"
-      ]
-    }
-  ]
-}
-```
+  ```javascript
+  {
+    "licenses": [
+      {
+        "key": "AAA...",
+        "applicationKeys": [
+          "jira-software"
+        ]
+      },
+      {
+        "key": "AAA...",
+        "applicationKeys": [
+          "jira-core",
+          "jira-servicedesk"
+        ]
+      }
+    ]
+  }
+  ```
 
-![Status 401][status-401]
+  ![Status 401][status-401]
 
-Returned if the current user is not authenticated.
+  Returned if the current user is not authenticated.
 
-![Status 403][status-403]
+  ![Status 403][status-403]
 
-Returned if the current user is not an administrator.
+  Returned if the current user is not an administrator.
 
-#### `PUT /rest/confapi/1/licenses`
+* #### `PUT /rest/confapi/1/licenses`
 
-Set a license by its license key.
+  Set a license by its license key.
 
-__Request Body__
+  __Request Body__
 
-Media type: `text/plain`
+  Media type: `text/plain`
 
-Content: License key, for example:
+  Content: License key, for example:
 
-```
-AAA...
-```
+  ```
+  AAA...
+  ```
 
-__Request Parameters__
+  __Request Parameters__
 
-| parameter   | type      | description         |
-| ----------- | --------- | ------------------- |
-| `clear`     | _boolean_ | Not implemented yet |
+  | parameter   | type      | description         |
+  | ----------- | --------- | ------------------- |
+  | `clear`     | _boolean_ | Not implemented yet |
 
-__Responses__
+  __Responses__
 
-![Status 200][status-200]
+  ![Status 200][status-200]
 
-```javascript
-{
-  "key": "AAA...",
-  "applicationKeys": [
-    "jira-core",
-    "jira-servicedesk",
-    "jira-software"
-  ]
-}
-```
+  ```javascript
+  {
+    "key": "AAA...",
+    "applicationKeys": [
+      "jira-core",
+      "jira-servicedesk",
+      "jira-software"
+    ]
+  }
+  ```
 
-![Status 401][status-401]
+  ![Status 401][status-401]
 
-Returned if the current user is not authenticated.
+  Returned if the current user is not authenticated.
 
-![Status 403][status-403]
+  ![Status 403][status-403]
 
-Returned if the current user is not an administrator.
+  Returned if the current user is not an administrator.
 
 [status-200]: https://img.shields.io/badge/status-200-brightgreen.svg
 [status-400]: https://img.shields.io/badge/status-400-red.svg
