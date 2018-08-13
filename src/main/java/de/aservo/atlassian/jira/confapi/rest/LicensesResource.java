@@ -1,6 +1,8 @@
 package de.aservo.atlassian.jira.confapi.rest;
 
 import com.atlassian.jira.license.LicenseDetails;
+import com.atlassian.jira.rest.api.util.ErrorCollection;
+import com.atlassian.jira.rest.exception.BadRequestWebException;
 import com.atlassian.jira.rest.v2.issue.RESTException;
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 import de.aservo.atlassian.jira.confapi.JiraApplicationHelper;
@@ -63,7 +65,7 @@ public class LicensesResource {
         webAuthenticationHelper.mustBeSysAdmin();
 
         if (licenseKey == null) {
-            throw new RESTException(Response.Status.BAD_REQUEST, "No key given");
+            throw new BadRequestWebException(ErrorCollection.of("No key given"));
         }
 
         final LicenseDetails licenseDetail = applicationHelper.setLicense(licenseKey);

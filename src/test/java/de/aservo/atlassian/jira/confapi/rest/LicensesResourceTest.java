@@ -1,6 +1,6 @@
 package de.aservo.atlassian.jira.confapi.rest;
 
-import com.atlassian.jira.rest.v2.issue.RESTException;
+import com.atlassian.jira.rest.exception.BadRequestWebException;
 import de.aservo.atlassian.jira.confapi.JiraApplicationHelper;
 import de.aservo.atlassian.jira.confapi.JiraWebAuthenticationHelper;
 import org.junit.Before;
@@ -10,8 +10,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import javax.ws.rs.core.Response;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LicensesResourceTest {
@@ -41,9 +39,8 @@ public class LicensesResourceTest {
 
     @Test
     public void testSetNullLicense() {
-        expectedException.expect(RESTException.class);
-
-        final Response response = licenseResource.setLicense(null);
+        expectedException.expect(BadRequestWebException.class);
+        licenseResource.setLicense(null);
     }
 
 }
