@@ -11,6 +11,7 @@ import static com.atlassian.jira.license.ProductLicense.LICENSE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -43,6 +44,11 @@ public class LicenseBeanTest {
     @Test
     public void testEquals() {
         assertThat(licenseBean1, equalTo(licenseBean2));
+    }
+
+    @Test
+    public void testNotEquals() {
+        assertThat(licenseBean1, not(equalTo("a string")));
     }
 
     @Test
