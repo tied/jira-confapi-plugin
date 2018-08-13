@@ -4,7 +4,6 @@ import com.atlassian.jira.application.ApplicationKeys;
 import com.atlassian.jira.license.LicenseDetails;
 import com.atlassian.jira.license.LicensedApplications;
 import com.atlassian.jira.license.MockLicensedApplications;
-import com.atlassian.jira.rest.exception.BadRequestWebException;
 import de.aservo.atlassian.jira.confapi.JiraApplicationHelper;
 import de.aservo.atlassian.jira.confapi.JiraWebAuthenticationHelper;
 import de.aservo.atlassian.jira.confapi.bean.LicenseBean;
@@ -18,6 +17,7 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 import java.util.Collection;
@@ -100,7 +100,7 @@ public class LicensesResourceTest {
 
     @Test
     public void testSetNullLicense() {
-        expectedException.expect(BadRequestWebException.class);
+        expectedException.expect(WebApplicationException.class);
         licenseResource.setLicense(null);
     }
 

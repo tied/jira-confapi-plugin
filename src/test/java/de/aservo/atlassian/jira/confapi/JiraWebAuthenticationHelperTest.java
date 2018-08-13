@@ -1,8 +1,6 @@
 package de.aservo.atlassian.jira.confapi;
 
 import com.atlassian.jira.permission.GlobalPermissionKey;
-import com.atlassian.jira.rest.exception.ForbiddenWebException;
-import com.atlassian.jira.rest.exception.NotAuthorisedWebException;
 import com.atlassian.jira.security.GlobalPermissionManager;
 import com.atlassian.jira.security.JiraAuthenticationContext;
 import com.atlassian.jira.user.MockApplicationUser;
@@ -13,6 +11,8 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import javax.ws.rs.WebApplicationException;
 
 import static org.mockito.Mockito.when;
 
@@ -52,7 +52,7 @@ public class JiraWebAuthenticationHelperTest {
     public void testMustBeAdminAsNonAdmin() {
         when(authenticationContext.getLoggedInUser()).thenReturn(user);
 
-        expectedException.expect(ForbiddenWebException.class);
+        expectedException.expect(WebApplicationException.class);
         webAuthenticationHelper.mustBeSysAdmin();
     }
 
@@ -60,7 +60,7 @@ public class JiraWebAuthenticationHelperTest {
     public void testMustBeAdminWithNullUser() {
         when(authenticationContext.getLoggedInUser()).thenReturn(null);
 
-        expectedException.expect(NotAuthorisedWebException.class);
+        expectedException.expect(WebApplicationException.class);
         webAuthenticationHelper.mustBeSysAdmin();
     }
 
