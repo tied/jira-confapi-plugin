@@ -1,5 +1,7 @@
 package de.aservo.atlassian.jira.confapi;
 
+import com.atlassian.jira.rest.exception.ForbiddenWebException;
+import com.atlassian.jira.rest.exception.NotAuthorisedWebException;
 import com.atlassian.jira.security.GlobalPermissionManager;
 import com.atlassian.jira.security.JiraAuthenticationContext;
 import com.atlassian.jira.user.ApplicationUser;
@@ -7,8 +9,6 @@ import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
 
 import static com.atlassian.jira.permission.GlobalPermissionKey.SYSTEM_ADMIN;
 
@@ -39,12 +39,12 @@ public class JiraWebAuthenticationHelper {
     public void mustBeSysAdmin() {
         final ApplicationUser user = authenticationContext.getLoggedInUser();
         if (user == null) {
-            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+            throw new NotAuthorisedWebException();
         }
 
         final boolean isSysAdmin = globalPermissionManager.hasPermission(SYSTEM_ADMIN, user);
         if (!isSysAdmin) {
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
+            throw new ForbiddenWebException();
         }
     }
 }
