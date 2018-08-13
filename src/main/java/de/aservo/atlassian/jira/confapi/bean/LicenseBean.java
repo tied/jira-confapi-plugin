@@ -6,6 +6,7 @@ import com.atlassian.jira.license.LicenseDetails;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -36,6 +37,23 @@ public class LicenseBean {
         return applicationKeys.stream()
                 .map(ApplicationKey::valueOf)
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof LicenseBean) {
+            LicenseBean other = (LicenseBean) obj;
+
+            return Objects.equals(key, other.key)
+                    && Objects.equals(applicationKeys, other.applicationKeys);
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key, applicationKeys);
     }
 
     /**
