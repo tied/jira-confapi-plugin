@@ -58,7 +58,7 @@ public class LicensesResource {
     @PUT
     @Consumes(MediaType.TEXT_PLAIN)
     public Response setLicense(
-            final String licenseKey) {
+            final String licenseKey) throws RESTException {
 
         webAuthenticationHelper.mustBeSysAdmin();
 
