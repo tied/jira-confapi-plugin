@@ -6,11 +6,14 @@ import com.atlassian.jira.license.JiraLicenseManager;
 import com.atlassian.jira.license.LicenseDetails;
 import com.atlassian.jira.license.LicensedApplications;
 import com.atlassian.jira.license.MockLicensedApplications;
+import com.atlassian.jira.util.ErrorCollection;
 import com.atlassian.jira.util.I18nHelper;
 import com.atlassian.jira.util.SimpleErrorCollection;
 import com.atlassian.jira.web.bean.MockI18nBean;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -30,6 +33,9 @@ import static org.mockito.Mockito.when;
 public class JiraApplicationHelperTest {
 
     private static final String LICENSE = "AAA...";
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Mock
     private JiraLicenseManager licenseManager;
@@ -73,6 +79,19 @@ public class JiraApplicationHelperTest {
 
         final LicenseDetails licenseDetails = applicationHelper.setLicense("AAA...");
         assertThat(licenseDetails, equalTo(mockLicenseDetail));
+    }
+
+    @Test
+    public void testSetLicenseNotValid() {
+        final JiraLicenseService.ValidationResult mockValidationResult = mock(JiraLicenseService.ValidationResult.class);
+        when(mockValidationResult.getErrorCollection()).thenReturn(new SimpleErrorCollection("License not valid", ErrorCollection.Reason.VALIDATION_FAILED));
+        when(mockValidationResult.getLicenseString()).thenReturn(LICENSE);
+
+        when(licenseService.validate(any(I18nHelper.class), anyString())).thenReturn(mockValidationResult);
+        when(licenseManager.setLicenseNoEvent(mockValidationResult.getLicenseString())).thenReturn(mockLicenseDetail);
+
+        expectedException.expect(IllegalArgumentException.class);
+        applicationHelper.setLicense("AAA...");
     }
 
 }
