@@ -2,7 +2,6 @@ package de.aservo.atlassian.jira.confapi;
 
 import com.atlassian.jira.permission.GlobalPermissionKey;
 import com.atlassian.jira.security.GlobalPermissionManager;
-import com.atlassian.jira.security.JiraAuthenticationContext;
 import com.atlassian.jira.user.MockApplicationUser;
 import org.junit.Before;
 import org.junit.Rule;
@@ -23,10 +22,10 @@ public class JiraWebAuthenticationHelperTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Mock
-    private JiraAuthenticationContext authenticationContext;
+    private GlobalPermissionManager globalPermissionManager;
 
     @Mock
-    private GlobalPermissionManager globalPermissionManager;
+    private JiraUserHelper userHelper;
 
     private MockApplicationUser user = new MockApplicationUser("user");
 
@@ -35,13 +34,13 @@ public class JiraWebAuthenticationHelperTest {
     @Before
     public void setup() {
         webAuthenticationHelper = new JiraWebAuthenticationHelper(
-                authenticationContext,
-                globalPermissionManager);
+                globalPermissionManager,
+                userHelper);
     }
 
     @Test
     public void testMustBeAdminAsSysAdmin() {
-        when(authenticationContext.getLoggedInUser()).thenReturn(user);
+        when(userHelper.getLoggedInUser()).thenReturn(user);
         when(globalPermissionManager.hasPermission(GlobalPermissionKey.SYSTEM_ADMIN, user)).thenReturn(true);
 
         // no exception may be thrown
@@ -50,7 +49,7 @@ public class JiraWebAuthenticationHelperTest {
 
     @Test
     public void testMustBeAdminAsNonAdmin() {
-        when(authenticationContext.getLoggedInUser()).thenReturn(user);
+        when(userHelper.getLoggedInUser()).thenReturn(user);
 
         expectedException.expect(WebApplicationException.class);
         webAuthenticationHelper.mustBeSysAdmin();
@@ -58,7 +57,7 @@ public class JiraWebAuthenticationHelperTest {
 
     @Test
     public void testMustBeAdminWithNullUser() {
-        when(authenticationContext.getLoggedInUser()).thenReturn(null);
+        when(userHelper.getLoggedInUser()).thenReturn(null);
 
         expectedException.expect(WebApplicationException.class);
         webAuthenticationHelper.mustBeSysAdmin();

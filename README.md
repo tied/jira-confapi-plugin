@@ -19,6 +19,83 @@ Resources
 
 All resources produce JSON (media type:  `application/json`) results.
 
+### Settings
+
+Access important JIRA settings like the title, the base url, the mode
+etc.
+
+* #### `GET /rest/confapi/1/settings`
+
+  Get JIRA application settings.
+
+  __Responses__
+
+  ![Status 200][status-200]
+
+  ```javascript
+  {
+    "baseurl": "http://localhost:2990/jira",
+    "mode": "private",
+    "title": "Your Company JIRA"
+  }
+  ```
+
+  ![Status 401][status-401]
+
+  Returned if the current user is not authenticated.
+
+  ![Status 403][status-403]
+
+  Returned if the current user is not an administrator.
+
+* #### `PUT /rest/confapi/1/settings`
+
+  Set JIRA application settings.
+
+  __Request Body__
+
+  Media type: `application/json`
+
+  Content: Settings, for example:
+
+  ```javascript
+  {
+    "baseurl": "http://localhost:2990/jira",
+    "mode": "private",
+    "title": "Your Company JIRA"
+  }
+  ```
+
+  __Request Parameters__
+
+  None.
+
+  __Responses__
+
+  ![Status 200][status-200]
+
+  Returned if request could be executed without major exceptions.
+
+  The response will contain a list of errors that occurred while setting
+  some specific values such as a string that was too long, for example:
+
+  ```
+  {
+    "errorMessages": [
+        "The length of the application title must not exceed 255 characters"
+    ],
+    "errors": {}
+  }
+  ```
+
+  ![Status 401][status-401]
+
+  Returned if the current user is not authenticated.
+
+  ![Status 403][status-403]
+
+  Returned if the current user is not an administrator.
+
 ### Licenses
 
 The JIRA license API is a bit weird and needs to be well understood.

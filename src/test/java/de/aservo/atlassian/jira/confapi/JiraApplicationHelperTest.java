@@ -6,10 +6,10 @@ import com.atlassian.jira.license.JiraLicenseManager;
 import com.atlassian.jira.license.LicenseDetails;
 import com.atlassian.jira.license.LicensedApplications;
 import com.atlassian.jira.license.MockLicensedApplications;
+import com.atlassian.jira.mock.MockApplicationProperties;
 import com.atlassian.jira.util.ErrorCollection;
 import com.atlassian.jira.util.I18nHelper;
 import com.atlassian.jira.util.SimpleErrorCollection;
-import com.atlassian.jira.web.bean.MockI18nBean;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -56,7 +56,8 @@ public class JiraApplicationHelperTest {
         when(mockLicenseDetail.getLicensedApplications()).thenReturn(licensedApplications);
 
         applicationHelper = new JiraApplicationHelper(
-                new MockI18nBean.MockI18nBeanFactory(),
+                new MockApplicationProperties(),
+                new MockJiraI18nHelper(),
                 licenseManager,
                 licenseService);
     }

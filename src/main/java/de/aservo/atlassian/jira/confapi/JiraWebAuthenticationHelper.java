@@ -1,7 +1,6 @@
 package de.aservo.atlassian.jira.confapi;
 
 import com.atlassian.jira.security.GlobalPermissionManager;
-import com.atlassian.jira.security.JiraAuthenticationContext;
 import com.atlassian.jira.user.ApplicationUser;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import org.springframework.stereotype.Component;
@@ -16,28 +15,27 @@ import static com.atlassian.jira.permission.GlobalPermissionKey.SYSTEM_ADMIN;
 public class JiraWebAuthenticationHelper {
 
     @ComponentImport
-    private final JiraAuthenticationContext authenticationContext;
-
-    @ComponentImport
     private final GlobalPermissionManager globalPermissionManager;
+
+    private final JiraUserHelper userHelper;
 
     /**
      * Constructor.
      *
-     * @param authenticationContext   the injected {@link JiraAuthenticationContext}
+     * @param userHelper              the injected {@link JiraUserHelper}
      * @param globalPermissionManager the injected {@link GlobalPermissionManager}
      */
     @Inject
     public JiraWebAuthenticationHelper(
-            final JiraAuthenticationContext authenticationContext,
-            final GlobalPermissionManager globalPermissionManager) {
+            final GlobalPermissionManager globalPermissionManager,
+            final JiraUserHelper userHelper) {
 
-        this.authenticationContext = authenticationContext;
         this.globalPermissionManager = globalPermissionManager;
+        this.userHelper = userHelper;
     }
 
     public void mustBeSysAdmin() {
-        final ApplicationUser user = authenticationContext.getLoggedInUser();
+        final ApplicationUser user = userHelper.getLoggedInUser();
         if (user == null) {
             throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
