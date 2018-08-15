@@ -27,6 +27,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -61,7 +62,7 @@ public class LicensesResourceTest {
         when(mockLicenseDetail.getLicenseString()).thenReturn(LICENSE);
         when(mockLicenseDetail.getLicensedApplications()).thenReturn(licensedApplications);
 
-        when(applicationHelper.setLicense(Matchers.anyString())).thenReturn(mockLicenseDetail);
+        when(applicationHelper.setLicense(Matchers.anyString(), anyBoolean())).thenReturn(mockLicenseDetail);
 
         licenseResource = new LicensesResource(
                 applicationHelper,
@@ -87,7 +88,7 @@ public class LicensesResourceTest {
 
     @Test
     public void testSetLicense() {
-        final Response response = licenseResource.setLicense(LICENSE);
+        final Response response = licenseResource.setLicense(false, LICENSE);
         final Object responseEntity = response.getEntity();
 
         assertThat(responseEntity, instanceOf(LicenseBean.class));
@@ -101,7 +102,7 @@ public class LicensesResourceTest {
     @Test
     public void testSetNullLicense() {
         expectedException.expect(WebApplicationException.class);
-        licenseResource.setLicense(null);
+        licenseResource.setLicense(false, null);
     }
 
 }

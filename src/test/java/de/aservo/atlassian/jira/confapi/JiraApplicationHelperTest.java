@@ -77,7 +77,20 @@ public class JiraApplicationHelperTest {
         when(licenseService.validate(any(I18nHelper.class), anyString())).thenReturn(mockValidationResult);
         when(licenseManager.setLicenseNoEvent(mockValidationResult.getLicenseString())).thenReturn(mockLicenseDetail);
 
-        final LicenseDetails licenseDetails = applicationHelper.setLicense("AAA...");
+        final LicenseDetails licenseDetails = applicationHelper.setLicense("AAA...", false);
+        assertThat(licenseDetails, equalTo(mockLicenseDetail));
+    }
+
+    @Test
+    public void testClearAndSetLicense() {
+        final JiraLicenseService.ValidationResult mockValidationResult = mock(JiraLicenseService.ValidationResult.class);
+        when(mockValidationResult.getErrorCollection()).thenReturn(new SimpleErrorCollection());
+        when(mockValidationResult.getLicenseString()).thenReturn(LICENSE);
+
+        when(licenseService.validate(any(I18nHelper.class), anyString())).thenReturn(mockValidationResult);
+        when(licenseManager.clearAndSetLicenseNoEvent(mockValidationResult.getLicenseString())).thenReturn(mockLicenseDetail);
+
+        final LicenseDetails licenseDetails = applicationHelper.setLicense("AAA...", true);
         assertThat(licenseDetails, equalTo(mockLicenseDetail));
     }
 
@@ -91,7 +104,7 @@ public class JiraApplicationHelperTest {
         when(licenseManager.setLicenseNoEvent(mockValidationResult.getLicenseString())).thenReturn(mockLicenseDetail);
 
         expectedException.expect(IllegalArgumentException.class);
-        applicationHelper.setLicense("AAA...");
+        applicationHelper.setLicense("AAA...", false);
     }
 
 }

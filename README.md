@@ -96,9 +96,9 @@ select the desired application, but this is not true.
 
   __Request Parameters__
 
-  | parameter   | type      | description         |
-  | ----------- | --------- | ------------------- |
-  | `clear`     | _boolean_ | Not implemented yet |
+  | parameter   | type      | description                                                                    |
+  | ----------- | --------- | ------------------------------------------------------------------------------ |
+  | `clear`     | _boolean_ | Clear all licenses before setting the new license, optional, defaults to false |
 
   __Responses__
 

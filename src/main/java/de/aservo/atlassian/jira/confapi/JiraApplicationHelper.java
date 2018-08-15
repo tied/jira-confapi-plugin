@@ -25,6 +25,13 @@ public class JiraApplicationHelper {
     @ComponentImport
     private final JiraLicenseService licenseService;
 
+    /**
+     * Constructor.
+     *
+     * @param i18nBeanFactory injected {@link com.atlassian.jira.util.I18nHelper.BeanFactory}
+     * @param licenseManager  injected {@link JiraLicenseManager}
+     * @param licenseService  injected {@link JiraLicenseService}
+     */
     @Inject
     public JiraApplicationHelper(
             final I18nHelper.BeanFactory i18nBeanFactory,
@@ -36,12 +43,25 @@ public class JiraApplicationHelper {
         this.licenseService = licenseService;
     }
 
+    /**
+     * Get all licenses.
+     *
+     * @return licenses details
+     */
     public Collection<LicenseDetails> getLicenses() {
           return Lists.newArrayList(licenseManager.getLicenses());
     }
 
+    /**
+     * Set a new license key and clear all licenses before if wanted.
+     *
+     * @param key   the license key
+     * @param clear whether to remove all licenses before setting the new license
+     * @return      license details
+     */
     public LicenseDetails setLicense(
-            final String key) {
+            final String key,
+            boolean clear) {
 
         final I18nHelper i18nHelper = i18nBeanFactory.getInstance(Locale.getDefault());
         final ValidationResult validationResult = licenseService.validate(i18nHelper, key);
@@ -50,6 +70,12 @@ public class JiraApplicationHelper {
             throw new IllegalArgumentException("Specified license was invalid.");
         }
 
-        return licenseManager.setLicenseNoEvent(validationResult.getLicenseString());
+        final String licenseString = validationResult.getLicenseString();
+
+        if (clear) {
+            return licenseManager.clearAndSetLicenseNoEvent(licenseString);
+        }
+
+        return licenseManager.setLicenseNoEvent(licenseString);
     }
 }
