@@ -9,6 +9,11 @@ ConfAPI for JIRA
 
 REST API for automated JIRA configuration.
 
+Related Documentation
+---------------------
+
+* [Atlassian REST API design guidelines version 1](https://developer.atlassian.com/server/framework/atlassian-sdk/atlassian-rest-api-design-guidelines-version-1/)
+
 Resources
 ---------
 
