@@ -82,6 +82,14 @@
             <groupId>com.atlassian.crowd</groupId>
             <artifactId>crowd-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.atlassian.upm</groupId>
+            <artifactId>licensing-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.upm</groupId>
+            <artifactId>upm-api</artifactId>
+        </dependency>
         <!-- Other dependencies -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -151,6 +159,10 @@
                             *
                         </Import-Package>
                         <Export-Package/>
+                        <DynamicImport-Package>
+                            com.atlassian.upm.api.license.entity;version="${upm.license.compatibility.version}",
+                            com.atlassian.upm.api.license;version="${upm.license.compatibility.version}",
+                        </DynamicImport-Package>
                     </instructions>
                     <products>
                         <product>
@@ -175,6 +187,26 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-storage-plugin</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <includeArtifactIds>
+                                plugin-license-storage-plugin
+                            </includeArtifactIds>
+                            <stripVersion>true</stripVersion>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
