@@ -52,22 +52,18 @@ public class JiraApplicationHelper {
         this.licenseService = licenseService;
     }
 
-    public String getTitle() {
-        return applicationProperties.getString(APKeys.JIRA_TITLE);
+    public String getBaseUrl() {
+        return applicationProperties.getString(APKeys.JIRA_BASEURL);
     }
 
-    public void setTitle(
-            @Nonnull final String title) {
+    public void setBaseUrl(
+            @Nonnull final String baseUrl) {
 
-        if (!TextUtils.stringSet(title)) {
-            throw new IllegalArgumentException(i18nHelper.getText("admin.errors.you.must.set.an.application.title"));
+        if (!UrlValidator.isValid(baseUrl)) {
+            throw new IllegalArgumentException(i18nHelper.getText("admin.errors.you.must.set.a.valid.base.url"));
         }
 
-        if (StringUtils.length(title) > 255) {
-            throw new IllegalArgumentException(i18nHelper.getText("admin.errors.invalid.length.of.an.application.title"));
-        }
-
-        applicationProperties.setString(APKeys.JIRA_TITLE, title);
+        applicationProperties.setString(APKeys.JIRA_BASEURL, baseUrl);
     }
 
     public String getMode() {
@@ -88,18 +84,22 @@ public class JiraApplicationHelper {
         applicationProperties.setString(APKeys.JIRA_MODE, mode);
     }
 
-    public String getBaseUrl() {
-        return applicationProperties.getString(APKeys.JIRA_BASEURL);
+    public String getTitle() {
+        return applicationProperties.getString(APKeys.JIRA_TITLE);
     }
 
-    public void setBaseUrl(
-            @Nonnull final String baseUrl) {
+    public void setTitle(
+            @Nonnull final String title) {
 
-        if (!UrlValidator.isValid(baseUrl)) {
-            throw new IllegalArgumentException(i18nHelper.getText("admin.errors.you.must.set.a.valid.base.url"));
+        if (!TextUtils.stringSet(title)) {
+            throw new IllegalArgumentException(i18nHelper.getText("admin.errors.you.must.set.an.application.title"));
         }
 
-        applicationProperties.setString(APKeys.JIRA_BASEURL, baseUrl);
+        if (StringUtils.length(title) > 255) {
+            throw new IllegalArgumentException(i18nHelper.getText("admin.errors.invalid.length.of.an.application.title"));
+        }
+
+        applicationProperties.setString(APKeys.JIRA_TITLE, title);
     }
 
     private boolean hasExternalUserManagement() {

@@ -20,6 +20,9 @@ public class SettingsBean {
     @XmlElement
     private final String title;
 
+    /**
+     * The default constructor is needed for JSON request deserialization.
+     */
     public SettingsBean() {
         this.baseurl = null;
         this.mode = null;

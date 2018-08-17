@@ -42,7 +42,7 @@ public class JiraI18nHelper {
         return i18nBeanFactory.getInstance(getLocale());
     }
 
-    private Locale getLocale() {
+    Locale getLocale() {
         final PropertySet userProperties = userHelper.getUserProperties();
 
         if (userProperties != null) {

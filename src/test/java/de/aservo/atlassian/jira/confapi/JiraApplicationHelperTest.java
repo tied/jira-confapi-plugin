@@ -10,7 +10,9 @@ import com.atlassian.jira.mock.MockApplicationProperties;
 import com.atlassian.jira.util.ErrorCollection;
 import com.atlassian.jira.util.I18nHelper;
 import com.atlassian.jira.util.SimpleErrorCollection;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -24,6 +26,7 @@ import java.util.Collections;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -60,6 +63,63 @@ public class JiraApplicationHelperTest {
                 new MockJiraI18nHelper(),
                 licenseManager,
                 licenseService);
+    }
+
+    @Test
+    public void testGetAndSetBaseUrl() {
+        assertNull(applicationHelper.getBaseUrl());
+        applicationHelper.setBaseUrl(MockJiraApplicationHelper.BASE_URL);
+        assertThat(applicationHelper.getBaseUrl(), equalTo(MockJiraApplicationHelper.BASE_URL));
+    }
+
+    @Test
+    public void testSetBaseUrlInvalid() {
+        final String baseUrl = "invalid";
+        expectedException.expect(IllegalArgumentException.class);
+        applicationHelper.setBaseUrl(baseUrl);
+    }
+
+    @Test
+    public void testGetAndSetMode() {
+        assertNull(applicationHelper.getMode());
+        applicationHelper.setMode(MockJiraApplicationHelper.MODE);
+        assertThat(applicationHelper.getMode(), equalTo(MockJiraApplicationHelper.MODE));
+    }
+
+    @Test
+    public void testSetModeInvalid() {
+        final String mode = "other";
+        expectedException.expect(IllegalArgumentException.class);
+        applicationHelper.setMode(mode);
+    }
+
+    @Test
+    @Ignore
+    public void testSetModeCombinationInvalid() {
+        // TODO: Different to solve as currently implemented
+    }
+
+    @Test
+    public void testGetAndSetTitle() {
+        assertNull(applicationHelper.getTitle());
+        applicationHelper.setTitle(MockJiraApplicationHelper.TITLE);
+        assertThat(applicationHelper.getTitle(), equalTo(MockJiraApplicationHelper.TITLE));
+    }
+
+    @Test
+    public void testSetTitleUnset() {
+        final String title = "";
+        // TODO: Get more specific here, as it is the same exception for a too long title
+        expectedException.expect(IllegalArgumentException.class);
+        applicationHelper.setTitle(title);
+    }
+
+    @Test
+    public void testSetTitleTooLong() {
+        final String title = StringUtils.repeat("A", 256);
+        // TODO: Get more specific here, as it is the same exception for an unset title
+        expectedException.expect(IllegalArgumentException.class);
+        applicationHelper.setTitle(title);
     }
 
     @Test
