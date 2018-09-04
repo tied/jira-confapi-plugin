@@ -200,6 +200,40 @@ select the desired application, but this is not true.
 
   Returned if the current user is not an administrator.
 
+### SMTP Mail Server
+
+Although this does not always seem to make any sense, JIRA allows defining
+multiple mail servers. The JIRA web interface hides the button for defining a
+new SMTP mail server when at least one server has been defined, but you can
+still use the appropriate page (if you know the URL) to create more than one.
+But as JIRA only sends mails via the default (first) SMTP mail server, this
+REST API only allows creating, updating and deleting one single mail server.
+
+* #### `GET /rest/confapi/1/mail/smtp`
+
+  Get the settings of the SMTP mail server, if any server is defined.
+
+  __Responses__
+
+  ![Status 200][status-200]
+
+  ```javascript
+  {
+    "name": "Localhost",
+    "from": "jira@localhost",
+    "prefix": "JIRA",
+    "host": "localhost"
+  }
+  ```
+
+  ![Status 401][status-401]
+
+  Returned if the current user is not authenticated.
+
+  ![Status 403][status-403]
+
+  Returned if the current user is not an administrator.
+
 [status-200]: https://img.shields.io/badge/status-200-brightgreen.svg
 [status-400]: https://img.shields.io/badge/status-400-red.svg
 [status-401]: https://img.shields.io/badge/status-401-red.svg
