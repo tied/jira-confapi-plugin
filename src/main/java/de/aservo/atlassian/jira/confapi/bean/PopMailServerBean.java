@@ -76,7 +76,7 @@ public class PopMailServerBean {
         this.timeout = timeout;
         this.username = username;
         this.password = StringUtils.isNotBlank(password)
-                ? "<HIDDEN>"
+                ? PASSWORD_HIDDEN
                 : null;
     }
 
@@ -84,8 +84,32 @@ public class PopMailServerBean {
         return name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public String getHost() {
         return host;
+    }
+
+    public String getProtocol() {
+        return protocol;
+    }
+
+    public Integer getPort() {
+        return port;
+    }
+
+    public long getTimeout() {
+        return timeout;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     // TODO: More specific exception
