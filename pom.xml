@@ -6,7 +6,7 @@
     <parent>
         <groupId>de.aservo</groupId>
         <artifactId>parent-pom</artifactId>
-        <version>0.0.1</version>
+        <version>0.0.4</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -16,8 +16,8 @@
     <version>0.0.2-SNAPSHOT</version>
     <packaging>atlassian-plugin</packaging>
 
-    <name>ConfAPI for JIRA</name>
-    <description>REST API for automated JIRA configuration.</description>
+    <name>ConfAPI for Jira</name>
+    <description>REST API for automated Jira configuration.</description>
 
     <licenses>
         <license>
@@ -47,12 +47,6 @@
     </developers>
 
     <properties>
-        <!-- General properties -->
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
         <!-- Atlassian properties -->
         <jira.version>7.9.2</jira.version>
         <!-- Be careful with changing the data version -->
@@ -65,13 +59,11 @@
         <atlassian.spring.scanner.version>2.1.5</atlassian.spring.scanner.version>
         <atlassian.crowdapi.version>2.10.2-rc04</atlassian.crowdapi.version>
         <upm.license.compatibility.version>2.15.3</upm.license.compatibility.version>
-
         <!-- Other properties -->
         <slf4j.version>1.7.9</slf4j.version>
         <javax.servlet.version>2.4</javax.servlet.version>
         <javax.ws.version>1.1.1</javax.ws.version>
         <javax.xml.version>2.1</javax.xml.version>
-
         <!-- Test properties -->
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
@@ -280,7 +272,6 @@
                         <Spring-Context>*</Spring-Context>
                         <Import-Package>
                             org.springframework.*;resolution:="optional",
-                            org.eclipse.gemini.*;resolution:="optional",
                             *
                         </Import-Package>
                         <Export-Package/>
@@ -312,33 +303,6 @@
                         <phase>process-classes</phase>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.version}</version>
-                <executions>
-                    <execution>
-                        <id>prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.eluder.coveralls</groupId>
-                <artifactId>coveralls-maven-plugin</artifactId>
-                <version>${coveralls.version}</version>
             </plugin>
         </plugins>
     </build>

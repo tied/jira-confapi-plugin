@@ -1,14 +1,15 @@
 [![ASERVO Software GmbH](https://aservo.github.io/img/aservo_atlassian_banner.png)](https://www.aservo.com/en/atlassian)
 
-ConfAPI for JIRA
+ConfAPI for Jira
 ================
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.aservo.atlassian/jira-confapi-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.aservo.atlassian/jira-confapi-plugin)
-[![Build Status](https://api.travis-ci.com/aservo/jira-confapi-plugin.svg?branch=master)](https://travis-ci.com/aservo/jira-confapi-plugin)
-[![Coverage Status](https://coveralls.io/repos/github/aservo/jira-confapi-plugin/badge.svg?branch=master)](https://coveralls.io/github/aservo/jira-confapi-plugin?branch=master)
-[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![Build Status](https://circleci.com/gh/aservo/jira-confapi-plugin.svg?style=shield)](https://circleci.com/gh/aservo/jira-confapi-plugin)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=aservo_jira-confapi-plugin&metric=coverage)](https://sonarcloud.io/dashboard?id=aservo_jira-confapi-plugin)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aservo_jira-confapi-plugin&metric=alert_status)](https://sonarcloud.io/dashboard?id=aservo_jira-confapi-plugin)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-REST API for automated JIRA configuration.
+REST API for automated Jira configuration.
 
 Related Documentation
 ---------------------
@@ -22,12 +23,12 @@ All resources produce JSON (media type:  `application/json`) results.
 
 ### Settings
 
-Access important JIRA settings like the title, the base url, the mode
+Access important Jira settings like the title, the base url, the mode
 etc.
 
 * #### `GET /rest/confapi/1/settings`
 
-  Get JIRA application settings.
+  Get Jira application settings.
 
   __Responses__
 
@@ -37,7 +38,7 @@ etc.
   {
     "baseurl": "http://localhost:2990/jira",
     "mode": "private",
-    "title": "Your Company JIRA"
+    "title": "Your Company Jira"
   }
   ```
 
@@ -51,7 +52,7 @@ etc.
 
 * #### `PUT /rest/confapi/1/settings`
 
-  Set JIRA application settings.
+  Set Jira application settings.
 
   __Request Body__
 
@@ -63,7 +64,7 @@ etc.
   {
     "baseurl": "http://localhost:2990/jira",
     "mode": "private",
-    "title": "Your Company JIRA"
+    "title": "Your Company Jira"
   }
   ```
 
@@ -99,23 +100,23 @@ etc.
 
 ### Licenses
 
-The JIRA license API is a bit weird and needs to be well understood.
+The Jira license API is a bit weird and needs to be well understood.
 Just like in the web interface, different license keys can theoretically
-be set for each application (JIRA Core, JIRA Software, etc.). However,
+be set for each application (Jira Core, Jira Software, etc.). However,
 the entered license key is always set for all applications for which it
 is valid.
 
 For example:
 
-1. JIRA Core and JIRA Software each have their own license key. If a
+1. Jira Core and Jira Software each have their own license key. If a
 license key is now entered (in the web interface or via the REST API)
 with which both applications can be licensed, this license key is stored
 for both applications.
 
-2. JIRA Core and JIRA Software use a common license key. If a license
+2. Jira Core and Jira Software use a common license key. If a license
 key is now entered (in the web interface or via the REST API) with which
-only JIRA Core can be licensed, the license key is also only stored for
-JIRA Core.
+only Jira Core can be licensed, the license key is also only stored for
+Jira Core.
 
 So again, an entered license key is always stored for all applications
 for which it is valid. The web interface might suggest that you can
