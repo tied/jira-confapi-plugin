@@ -21,7 +21,7 @@ jobs:
           command: mvn package
       - run:
           name: Analyze on SonarCloud
-          command: mvn verify sonar:sonar
+          command: mvn -DskipTests sonar:sonar
       - persist_to_workspace:
           root: /tmp/build
           paths:
@@ -46,9 +46,7 @@ jobs:
           command: gpg --no-tty --batch --import .circleci/sign.asc
       - run:
           name: Deploy to Maven Central
-          command: |
-            export GPG_TTY=$(tty)
-            mvn -s .circleci/settings.xml -DskipTests deploy
+          command: export GPG_TTY=$(tty) && mvn -s .circleci/settings.xml -DskipTests deploy
       - save_cache:
           paths:
             - ~/.m2
