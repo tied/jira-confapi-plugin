@@ -43,7 +43,7 @@ jobs:
           command: openssl aes-256-cbc -S ${SIGN_ASC_SALT} -K ${SIGN_ASC_KEY} -iv ${SIGN_ASC_IV} -in .circleci/sign.asc.enc -out .circleci/sign.asc -d
       - run:
           name: Import Signing Key
-          command: gpg2 --fast-import .circleci/sign.asc
+          command: gpg --import .circleci/sign.asc
       - run:
           name: Export GPG Shell
           command: export GPG_TTY=$(tty)
