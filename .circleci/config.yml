@@ -28,6 +28,16 @@ jobs:
   deploy:
     executor: maven
     steps:
+      - checkout
+      - restore_cache:
+          key: jira-confapi-plugin-{{ checksum "pom.xml" }}
+      - run:
+          name: Download uncached Dependencies
+          command: mvn dependency:go-offline
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: jira-confapi-plugin-{{ checksum "pom.xml" }}
       - run:
           name: Decrypt Signing Key
           command: openssl aes-256-cbc -S ${SIGN_ASC_SALT} -K ${SIGN_ASC_KEY} -iv ${SIGN_ASC_IV} -in .circleci/sign.asc.enc -out .circleci/sign.asc -d
