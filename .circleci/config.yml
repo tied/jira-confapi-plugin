@@ -4,6 +4,7 @@ executors:
   maven:
     docker:
       - image: circleci/openjdk:8-jdk
+    working_directory: /tmp/build
 
 jobs:
   build:
@@ -25,28 +26,24 @@ jobs:
       - run:
           name: Analyze on SonarCloud
           command: mvn verify sonar:sonar
+      - persist_to_workspace:
+          root: /tmp/build
+          paths:
+            - target
   deploy:
     executor: maven
     steps:
-      - checkout
-      - restore_cache:
-          key: jira-confapi-plugin-{{ checksum "pom.xml" }}
       - run:
-          name: Download uncached Dependencies
-          command: mvn dependency:go-offline
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: jira-confapi-plugin-{{ checksum "pom.xml" }}
+          name: Export GPG Shell Variable
+          command: echo 'export GPG_TTY=$(tty)' >> $BASH_ENV
       - run:
           name: Decrypt Signing Key
           command: openssl aes-256-cbc -S ${SIGN_ASC_SALT} -K ${SIGN_ASC_KEY} -iv ${SIGN_ASC_IV} -in .circleci/sign.asc.enc -out .circleci/sign.asc -d
       - run:
-          name: Export GPG Shell
-          command: export GPG_TTY=$(tty)
-      - run:
           name: Import Signing Key
           command: gpg --batch --import .circleci/sign.asc
+      - attach_workspace:
+          at: /tmp/build
       - run:
           name: Deploy to Maven Central
           command: mvn -s .circleci/settings.xml -DskipTests deploy
