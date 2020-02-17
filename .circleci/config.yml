@@ -46,7 +46,7 @@ jobs:
           command: export GPG_TTY=$(tty)
       - run:
           name: Import Signing Key
-          command: gpg --import .circleci/sign.asc
+          command: gpg --batch --import .circleci/sign.asc
       - run:
           name: Deploy to Maven Central
           command: mvn -s .circleci/settings.xml -DskipTests deploy
