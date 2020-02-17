@@ -14,12 +14,8 @@ jobs:
       - restore_cache:
           key: jira-confapi-plugin-{{ checksum "pom.xml" }}
       - run:
-          name: Download uncached Dependencies
+          name: Download Dependencies
           command: mvn dependency:go-offline
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: jira-confapi-plugin-{{ checksum "pom.xml" }}
       - run:
           name: Compile, Package and Test
           command: mvn package
@@ -30,9 +26,18 @@ jobs:
           root: /tmp/build
           paths:
             - .
+      - save_cache:
+          paths:
+            - ~/.m2
+            - ~/.sonar/cache
+          key: jira-confapi-plugin-{{ checksum "pom.xml" }}
   deploy:
     executor: maven
     steps:
+      - restore_cache:
+          key: jira-confapi-plugin-{{ checksum "pom.xml" }}
+      - attach_workspace:
+          at: /tmp/build
       - run:
           name: Export GPG Shell Variable
           command: echo 'export GPG_TTY=$(tty)' >> $BASH_ENV
@@ -42,11 +47,14 @@ jobs:
       - run:
           name: Import Signing Key
           command: gpg --batch --import .circleci/sign.asc
-      - attach_workspace:
-          at: /tmp/build
       - run:
           name: Deploy to Maven Central
           command: mvn -s .circleci/settings.xml -DskipTests deploy
+      - save_cache:
+          paths:
+            - ~/.m2
+            - ~/.sonar/cache
+          key: jira-confapi-plugin-{{ checksum "pom.xml" }}
 
 workflows:
   main:
