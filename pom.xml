@@ -6,7 +6,7 @@
     <parent>
         <groupId>de.aservo</groupId>
         <artifactId>parent-pom</artifactId>
-        <version>0.0.4</version>
+        <version>0.0.5</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
