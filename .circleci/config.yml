@@ -19,10 +19,13 @@ jobs:
       - run:
           name: Compile, Package and Test
           command: mvn package
+      - run:
+          name: Copy Artifacts into separate Directory
+          command: mkdir -p /tmp/artifacts && cp target/*.{jar,obr} /tmp/artifacts
       - store_artifacts:
-          path: target/*.jar
+          path: /tmp/artifacts
       - store_test_results:
-          path: surefire-reports
+          path: target/surefire-reports
       - run:
           name: Analyze on SonarCloud
           command: mvn -DskipTests sonar:sonar
