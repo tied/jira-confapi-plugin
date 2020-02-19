@@ -38,6 +38,21 @@ jobs:
             - ~/.m2
             - ~/.sonar/cache
           key: jira-confapi-plugin-{{ checksum "pom.xml" }}
+  verify:
+    executor: maven
+    steps:
+      - attach_workspace:
+          at: /tmp/build
+      - restore_cache:
+          key: jira-confapi-plugin-{{ checksum "pom.xml" }}
+      - run:
+          name: Run Integration Tests
+          command: mvn verify
+      - save_cache:
+          paths:
+            - ~/.m2
+            - ~/.sonar/cache
+          key: jira-confapi-plugin-{{ checksum "pom.xml" }}
   deploy:
     executor: maven
     steps:
@@ -65,9 +80,12 @@ workflows:
     jobs:
       - build:
           context: global
-      - deploy:
+      - verify:
           requires:
             - build
+      - deploy:
+          requires:
+            - verify
           filters:
             branches:
               only: master
