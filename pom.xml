@@ -48,6 +48,7 @@
     </developers>
 
     <properties>
+        <ajp.port>8209</ajp.port>
         <!-- Atlassian properties -->
         <jira.version>7.9.2</jira.version>
         <!-- Be careful with changing the data version -->
@@ -252,6 +253,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <productVersion>${jira.version}</productVersion>
+                    <ajpPort>${ajp.port}</ajpPort>
                     <enableFastdev>false</enableFastdev>
                     <enableDevToolbox>false</enableDevToolbox>
                     <enablePde>false</enablePde>
