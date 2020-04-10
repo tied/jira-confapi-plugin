@@ -48,38 +48,45 @@
     </developers>
 
     <properties>
-        <ajp.port>8209</ajp.port>
-        <!-- Atlassian properties -->
         <jira.version>7.9.2</jira.version>
-        <!-- Be careful with changing the data version -->
-        <jira.data.version>7.5.0</jira.data.version>
-        <atlassian.amps.version>6.3.15</atlassian.amps.version>
-        <atlassian.project.templates.version>6.2.0</atlassian.project.templates.version>
-        <atlassian.sal.version>3.1.0</atlassian.sal.version>
-        <atlassian.plugins.rest.version>5.0.1</atlassian.plugins.rest.version>
-        <atlassian.quick.reload.version>2.0.0</atlassian.quick.reload.version>
+        <atlassian.ajp.port>8209</atlassian.ajp.port>
+        <atlassian.amps.version>8.0.2</atlassian.amps.version>
+        <atlassian.plugin.key>${project.groupId}.${project.artifactId}</atlassian.plugin.key>
         <atlassian.spring.scanner.version>2.1.5</atlassian.spring.scanner.version>
-        <atlassian.crowdapi.version>2.10.2-rc04</atlassian.crowdapi.version>
-        <upm.license.compatibility.version>2.15.3</upm.license.compatibility.version>
-        <!-- Other properties -->
-        <slf4j.version>1.7.9</slf4j.version>
-        <javax.servlet.version>2.4</javax.servlet.version>
-        <javax.ws.version>1.1.1</javax.ws.version>
-        <javax.xml.version>2.1</javax.xml.version>
-        <!-- Test properties -->
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
-        <jacoco.version>0.8.1</jacoco.version>
-        <coveralls.version>4.3.0</coveralls.version>
+        <wink-client.version>1.4</wink-client.version>
     </properties>
 
-    <dependencies>
-        <!-- Atlassian dependencies -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.atlassian.jira</groupId>
+                <artifactId>jira-api</artifactId>
+                <version>${jira.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>jta</groupId>
+                        <artifactId>jta</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.jira</groupId>
+                <artifactId>jira-plugins</artifactId>
+                <version>${jira.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
+    <dependencies>
         <dependency>
             <groupId>com.atlassian.jira</groupId>
             <artifactId>jira-api</artifactId>
-            <version>${jira.version}</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -92,7 +99,6 @@
         <dependency>
             <groupId>com.atlassian.jira</groupId>
             <artifactId>jira-core</artifactId>
-            <version>${jira.version}</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -107,30 +113,20 @@
         </dependency>
 
         <dependency>
-            <groupId>com.atlassian.jira.plugins</groupId>
-            <artifactId>project-templates-api</artifactId>
-            <version>${atlassian.project.templates.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
             <groupId>com.atlassian.jira</groupId>
             <artifactId>jira-rest-api</artifactId>
-            <version>${jira.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.atlassian.plugins.rest</groupId>
             <artifactId>atlassian-rest-common</artifactId>
-            <version>${atlassian.plugins.rest.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.atlassian.plugins.rest</groupId>
             <artifactId>atlassian-rest-doclet</artifactId>
-            <version>${atlassian.plugins.rest.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -141,79 +137,33 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.atlassian.templaterenderer</groupId>
-            <artifactId>atlassian-template-renderer-api</artifactId>
-            <version>3.0.0</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.atlassian.sal</groupId>
-            <artifactId>sal-api</artifactId>
-            <version>${atlassian.sal.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.atlassian.crowd</groupId>
-            <artifactId>crowd-api</artifactId>
-            <version>${atlassian.crowdapi.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.atlassian.upm</groupId>
-            <artifactId>plugin-license-storage-lib</artifactId>
-            <version>${upm.license.compatibility.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.atlassian.upm</groupId>
-            <artifactId>plugin-license-storage-plugin</artifactId>
-            <version>${upm.license.compatibility.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.atlassian.upm</groupId>
-            <artifactId>licensing-api</artifactId>
-            <version>${upm.license.compatibility.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.atlassian.upm</groupId>
-            <artifactId>upm-api</artifactId>
-            <version>${upm.license.compatibility.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- Other dependencies -->
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>jsr311-api</artifactId>
-            <version>${javax.ws.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
-            <version>${javax.xml.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <!-- Test dependencies -->
+
+        <dependency>
+            <groupId>com.atlassian.jira</groupId>
+            <artifactId>jira-tests</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -230,16 +180,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.atlassian.jira</groupId>
-            <artifactId>jira-tests</artifactId>
-            <version>${jira.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.wink</groupId>
             <artifactId>wink-client</artifactId>
-            <version>1.4</version>
+            <version>${wink-client.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -248,18 +191,13 @@
         <plugins>
             <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
-                <artifactId>maven-jira-plugin</artifactId>
+                <artifactId>jira-maven-plugin</artifactId>
                 <version>${atlassian.amps.version}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <productVersion>${jira.version}</productVersion>
-                    <ajpPort>${ajp.port}</ajpPort>
-                    <enableFastdev>false</enableFastdev>
-                    <enableDevToolbox>false</enableDevToolbox>
-                    <enablePde>false</enablePde>
+                    <ajpPort>${atlassian.ajp.port}</ajpPort>
                     <!-- <extractDependencies>false</extractDependencies> -->
-                    <skipRestDocGeneration>true</skipRestDocGeneration>
-                    <skipManifestValidation>true</skipManifestValidation>
                     <allowGoogleTracking>false</allowGoogleTracking>
                     <systemPropertyVariables>
                         <atlassian.mail.senddisabled>false</atlassian.mail.senddisabled>
@@ -270,20 +208,12 @@
                             <version>${jira.version}</version>
                         </application>
                     </applications>
-                    <pluginArtifacts>
-                        <pluginArtifact>
-                            <groupId>com.atlassian.labs.plugins</groupId>
-                            <artifactId>quickreload</artifactId>
-                            <version>${atlassian.quick.reload.version}</version>
-                        </pluginArtifact>
-                    </pluginArtifacts>
                     <instructions>
-                        <Atlassian-Plugin-Key>${project.groupId}.${project.artifactId}</Atlassian-Plugin-Key>
-                        <Spring-Context>*</Spring-Context>
+                        <Atlassian-Plugin-Key>${atlassian.plugin.key}</Atlassian-Plugin-Key>
                         <Import-Package>
                             *;version="0";resolution:=optional
                         </Import-Package>
-                        <Export-Package/>
+                        <Spring-Context>*</Spring-Context>
                     </instructions>
                 </configuration>
             </plugin>
@@ -294,10 +224,10 @@
                 <version>${atlassian.spring.scanner.version}</version>
                 <executions>
                     <execution>
+                        <phase>process-classes</phase>
                         <goals>
                             <goal>atlassian-spring-scanner</goal>
                         </goals>
-                        <phase>process-classes</phase>
                     </execution>
                 </executions>
             </plugin>
