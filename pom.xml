@@ -49,9 +49,11 @@
 
     <properties>
         <jira.version>7.9.2</jira.version>
+        <!-- other properties -->
         <atlassian.ajp.port>8209</atlassian.ajp.port>
         <atlassian.amps.version>8.0.2</atlassian.amps.version>
         <atlassian.plugin.key>${project.groupId}.${project.artifactId}</atlassian.plugin.key>
+        <confapi-commons.version>0.0.1-SNAPSHOT</confapi-commons.version>
         <atlassian.spring.scanner.version>2.1.5</atlassian.spring.scanner.version>
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
@@ -82,8 +84,14 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <dependencies>
+        <dependency>
+            <groupId>de.aservo.atlassian</groupId>
+            <artifactId>confapi-commons</artifactId>
+            <version>${confapi-commons.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
         <dependency>
             <groupId>com.atlassian.jira</groupId>
             <artifactId>jira-api</artifactId>
@@ -216,6 +224,14 @@
                         <Spring-Context>*</Spring-Context>
                     </instructions>
                 </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy-bundled-dependencies</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
