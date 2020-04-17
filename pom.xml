@@ -185,6 +185,14 @@
         <!-- Test dependencies -->
 
         <dependency>
+            <groupId>de.aservo.atlassian</groupId>
+            <artifactId>confapi-commons</artifactId>
+            <version>${confapi-commons.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.atlassian.jira</groupId>
             <artifactId>jira-tests</artifactId>
             <scope>test</scope>

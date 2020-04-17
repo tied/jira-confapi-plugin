@@ -3,7 +3,7 @@ package de.aservo.atlassian.jira.confapi.rest;
 import com.atlassian.jira.rest.api.util.ErrorCollection;
 import de.aservo.atlassian.confapi.constants.ConfAPI;
 import de.aservo.atlassian.confapi.model.SettingsBean;
-import de.aservo.atlassian.confapi.rest.SettingsResourceInterface;
+import de.aservo.atlassian.confapi.rest.api.SettingsResource;
 import de.aservo.atlassian.jira.confapi.service.JiraApplicationHelper;
 import de.aservo.atlassian.jira.confapi.helper.JiraWebAuthenticationHelper;
 import org.springframework.stereotype.Component;
@@ -23,7 +23,7 @@ import javax.ws.rs.core.Response;
 @Path(ConfAPI.SETTINGS)
 @Produces(MediaType.APPLICATION_JSON)
 @Component
-public class SettingsResource implements SettingsResourceInterface {
+public class SettingsResourceImpl implements SettingsResource {
 
     private final JiraApplicationHelper applicationHelper;
 
@@ -36,7 +36,7 @@ public class SettingsResource implements SettingsResourceInterface {
      * @param webAuthenticationHelper the injected {@link JiraWebAuthenticationHelper}
      */
     @Inject
-    public SettingsResource(
+    public SettingsResourceImpl(
             final JiraApplicationHelper applicationHelper,
             final JiraWebAuthenticationHelper webAuthenticationHelper) {
 

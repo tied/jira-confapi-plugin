@@ -18,7 +18,7 @@ jobs:
           command: ./mvnw dependency:go-offline -U
       - run:
           name: Compile and Package
-          command: ./mvnw package -DskipTests
+          command: ./mvnw package -DskipUnitTests
       - run:
           name: Copy Artifacts into separate Directory
           command: mkdir -p /tmp/artifacts && cp target/*.{jar,obr} /tmp/artifacts

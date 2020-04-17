@@ -32,13 +32,13 @@ public class SettingsResourceTest {
     @Mock
     private JiraWebAuthenticationHelper webAuthenticationHelper;
 
-    private SettingsResource settingsResource;
+    private SettingsResourceImpl settingsResource;
 
     @Before
     public void setup() {
         applicationHelper = new MockJiraApplicationHelper();
 
-        settingsResource = new SettingsResource(
+        settingsResource = new SettingsResourceImpl(
                 applicationHelper,
                 webAuthenticationHelper);
     }

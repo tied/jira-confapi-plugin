@@ -209,6 +209,332 @@ ifdef::internal-generation[]
 endif::internal-generation[]
 
 
+[.MailServer]
+=== MailServer
+
+
+[.getMailServerPop]
+==== getMailServerPop
+    
+`GET /mail-server/pop`
+
+Get the default POP mail server
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}mail-server/pop/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+
+
+===== Return Type
+
+<<MailServerPopBean>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| 
+|  <<MailServerPopBean>>
+
+
+| 204
+| 
+|  <<ErrorCollection>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}mail-server/pop/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}mail-server/pop/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :mail-server/pop/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}mail-server/pop/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.getMailServerSmtp]
+==== getMailServerSmtp
+    
+`GET /mail-server/smtp`
+
+Get the default SMTP mail server
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}mail-server/smtp/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+
+
+===== Return Type
+
+<<MailServerSmtpBean>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| 
+|  <<MailServerSmtpBean>>
+
+
+| 204
+| 
+|  <<ErrorCollection>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}mail-server/smtp/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}mail-server/smtp/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :mail-server/smtp/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}mail-server/smtp/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.setMailServerPop]
+==== setMailServerPop
+    
+`PUT /mail-server/pop`
+
+Set the default POP mail server
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}mail-server/pop/PUT/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| MailServerPopBean 
+|  <<MailServerPopBean>> 
+| - 
+|  
+|  
+
+|===         
+
+
+
+
+
+===== Return Type
+
+<<MailServerPopBean>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| 
+|  <<MailServerPopBean>>
+
+
+| 400
+| 
+|  <<ErrorCollection>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}mail-server/pop/PUT/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}mail-server/pop/PUT/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :mail-server/pop/PUT/PUT.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}mail-server/pop/PUT/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.setMailServerSmtp]
+==== setMailServerSmtp
+    
+`PUT /mail-server/smtp`
+
+Set the default SMTP mail server
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}mail-server/smtp/PUT/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| MailServerSmtpBean 
+|  <<MailServerSmtpBean>> 
+| - 
+|  
+|  
+
+|===         
+
+
+
+
+
+===== Return Type
+
+<<MailServerSmtpBean>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| 
+|  <<MailServerSmtpBean>>
+
+
+| 400
+| 
+|  <<ErrorCollection>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}mail-server/smtp/PUT/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}mail-server/smtp/PUT/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :mail-server/smtp/PUT/PUT.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}mail-server/smtp/PUT/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
 [.Ping]
 === Ping
 
@@ -383,7 +709,7 @@ Set the application settings
 
 | SettingsBean 
 |  <<SettingsBean>> 
-| X 
+| - 
 |  
 |  
 
@@ -529,6 +855,152 @@ endif::internal-generation[]
 | licenses 
 |  
 | List  of <<LicenseBean>> 
+| 
+|  
+
+|===
+
+
+[#MailServerPopBean]
+=== _MailServerPopBean_ 
+
+
+
+[.fields-MailServerPopBean]
+[cols="2,1,2,4,1"]
+|===         
+| Field Name| Required| Type| Description| Format
+
+| name 
+|  
+| String  
+| 
+|  
+
+| description 
+|  
+| String  
+| 
+|  
+
+| host 
+|  
+| String  
+| 
+|  
+
+| port 
+|  
+| Integer  
+| 
+| int32 
+
+| protocol 
+|  
+| String  
+| 
+|  
+
+| timeout 
+|  
+| Long  
+| 
+| int64 
+
+| username 
+|  
+| String  
+| 
+|  
+
+| password 
+|  
+| String  
+| 
+|  
+
+|===
+
+
+[#MailServerSmtpBean]
+=== _MailServerSmtpBean_ 
+
+
+
+[.fields-MailServerSmtpBean]
+[cols="2,1,2,4,1"]
+|===         
+| Field Name| Required| Type| Description| Format
+
+| name 
+|  
+| String  
+| 
+|  
+
+| description 
+|  
+| String  
+| 
+|  
+
+| host 
+|  
+| String  
+| 
+|  
+
+| port 
+|  
+| Integer  
+| 
+| int32 
+
+| protocol 
+|  
+| String  
+| 
+|  
+
+| timeout 
+|  
+| Long  
+| 
+| int64 
+
+| username 
+|  
+| String  
+| 
+|  
+
+| password 
+|  
+| String  
+| 
+|  
+
+| adminContact 
+|  
+| String  
+| 
+|  
+
+| from 
+|  
+| String  
+| 
+|  
+
+| prefix 
+|  
+| String  
+| 
+|  
+
+| tls 
+|  
+| Boolean  
 | 
 |  
 
