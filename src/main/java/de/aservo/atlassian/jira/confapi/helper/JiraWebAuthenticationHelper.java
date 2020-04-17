@@ -1,8 +1,9 @@
-package de.aservo.atlassian.jira.confapi;
+package de.aservo.atlassian.jira.confapi.helper;
 
 import com.atlassian.jira.security.GlobalPermissionManager;
 import com.atlassian.jira.user.ApplicationUser;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
+import de.aservo.atlassian.jira.confapi.service.JiraUserHelper;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;

@@ -4,10 +4,10 @@ import com.atlassian.jira.application.ApplicationKeys;
 import com.atlassian.jira.license.LicenseDetails;
 import com.atlassian.jira.license.LicensedApplications;
 import com.atlassian.jira.license.MockLicensedApplications;
-import de.aservo.atlassian.jira.confapi.JiraApplicationHelper;
-import de.aservo.atlassian.jira.confapi.JiraWebAuthenticationHelper;
 import de.aservo.atlassian.confapi.model.LicenseBean;
 import de.aservo.atlassian.confapi.model.LicensesBean;
+import de.aservo.atlassian.jira.confapi.helper.JiraWebAuthenticationHelper;
+import de.aservo.atlassian.jira.confapi.service.JiraApplicationHelper;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,7 +17,6 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
 import java.util.Collections;
@@ -45,7 +44,7 @@ public class LicensesResourceTest {
 
     private LicenseDetails mockLicenseDetail;
 
-    private LicensesResource licenseResource;
+    private LicensesResourceImpl licenseResource;
 
     @Before
     public void setup() {
@@ -64,7 +63,7 @@ public class LicensesResourceTest {
 
         when(applicationHelper.setLicense(Matchers.anyString(), anyBoolean())).thenReturn(mockLicenseDetail);
 
-        licenseResource = new LicensesResource(
+        licenseResource = new LicensesResourceImpl(
                 applicationHelper,
                 webAuthenticationHelper);
     }
@@ -97,12 +96,6 @@ public class LicensesResourceTest {
         final LicenseBean mockLicenseBean = licenseResource.createLicenseBean(mockLicenseDetail);
 
         assertThat(licenseBean, equalTo(mockLicenseBean));
-    }
-
-    @Test
-    public void testSetNullLicense() {
-        expectedException.expect(WebApplicationException.class);
-        licenseResource.setLicense(false, null);
     }
 
 }

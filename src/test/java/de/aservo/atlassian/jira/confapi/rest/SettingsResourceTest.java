@@ -1,9 +1,9 @@
 package de.aservo.atlassian.jira.confapi.rest;
 
 import com.atlassian.jira.rest.api.util.ErrorCollection;
-import de.aservo.atlassian.jira.confapi.JiraApplicationHelper;
-import de.aservo.atlassian.jira.confapi.JiraWebAuthenticationHelper;
-import de.aservo.atlassian.jira.confapi.MockJiraApplicationHelper;
+import de.aservo.atlassian.jira.confapi.service.JiraApplicationHelper;
+import de.aservo.atlassian.jira.confapi.helper.JiraWebAuthenticationHelper;
+import de.aservo.atlassian.jira.confapi.helper.MockJiraApplicationHelper;
 import de.aservo.atlassian.confapi.model.SettingsBean;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
@@ -32,13 +32,13 @@ public class SettingsResourceTest {
     @Mock
     private JiraWebAuthenticationHelper webAuthenticationHelper;
 
-    private SettingsResource settingsResource;
+    private SettingsResourceImpl settingsResource;
 
     @Before
     public void setup() {
         applicationHelper = new MockJiraApplicationHelper();
 
-        settingsResource = new SettingsResource(
+        settingsResource = new SettingsResourceImpl(
                 applicationHelper,
                 webAuthenticationHelper);
     }

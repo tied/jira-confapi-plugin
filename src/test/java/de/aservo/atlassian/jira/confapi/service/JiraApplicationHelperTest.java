@@ -1,4 +1,4 @@
-package de.aservo.atlassian.jira.confapi;
+package de.aservo.atlassian.jira.confapi.service;
 
 import com.atlassian.jira.application.ApplicationKeys;
 import com.atlassian.jira.bc.license.JiraLicenseService;
@@ -11,6 +11,7 @@ import com.atlassian.jira.util.ErrorCollection;
 import com.atlassian.jira.util.I18nHelper;
 import com.atlassian.jira.util.SimpleErrorCollection;
 import com.atlassian.jira.web.bean.MockI18nBean;
+import de.aservo.atlassian.jira.confapi.helper.MockJiraApplicationHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Ignore;

@@ -5,11 +5,12 @@ import com.atlassian.jira.license.LicenseDetails;
 import de.aservo.atlassian.confapi.constants.ConfAPI;
 import de.aservo.atlassian.confapi.model.LicenseBean;
 import de.aservo.atlassian.confapi.model.LicensesBean;
-import de.aservo.atlassian.confapi.rest.LicenseResourceInterface;
-import de.aservo.atlassian.jira.confapi.JiraApplicationHelper;
-import de.aservo.atlassian.jira.confapi.JiraWebAuthenticationHelper;
+import de.aservo.atlassian.confapi.rest.api.LicenseResource;
+import de.aservo.atlassian.jira.confapi.helper.JiraWebAuthenticationHelper;
+import de.aservo.atlassian.jira.confapi.service.JiraApplicationHelper;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
 @Path(ConfAPI.LICENSES)
 @Produces(MediaType.APPLICATION_JSON)
 @Component
-public class LicensesResource implements LicenseResourceInterface {
+public class LicensesResourceImpl implements LicenseResource {
 
     private final JiraApplicationHelper applicationHelper;
 
@@ -43,7 +44,7 @@ public class LicensesResource implements LicenseResourceInterface {
      * @param webAuthenticationHelper the injected {@link JiraWebAuthenticationHelper}
      */
     @Inject
-    public LicensesResource(
+    public LicensesResourceImpl(
             final JiraApplicationHelper applicationHelper,
             final JiraWebAuthenticationHelper webAuthenticationHelper) {
 
@@ -68,13 +69,9 @@ public class LicensesResource implements LicenseResourceInterface {
     @Override
     public Response setLicense(
             @QueryParam("clear") @DefaultValue("false") boolean clear,
-            final String licenseKey) throws WebApplicationException {
+            @Nonnull final String licenseKey) throws WebApplicationException {
 
         webAuthenticationHelper.mustBeSysAdmin();
-
-        if (licenseKey == null) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        }
 
         final LicenseDetails licenseDetails = applicationHelper.setLicense(licenseKey, clear);
         return Response.ok(createLicenseBean(licenseDetails)).build();

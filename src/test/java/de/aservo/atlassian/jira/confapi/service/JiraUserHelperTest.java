@@ -1,10 +1,11 @@
-package de.aservo.atlassian.jira.confapi;
+package de.aservo.atlassian.jira.confapi.service;
 
 import com.atlassian.jira.mock.security.MockAuthenticationContext;
 import com.atlassian.jira.user.ApplicationUser;
 import com.atlassian.jira.user.MockApplicationUser;
 import com.atlassian.jira.user.MockUserPropertyManager;
 import com.opensymphony.module.propertyset.PropertySet;
+import de.aservo.atlassian.jira.confapi.service.JiraUserHelper;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
