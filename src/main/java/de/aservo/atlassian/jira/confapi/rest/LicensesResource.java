@@ -1,11 +1,13 @@
 package de.aservo.atlassian.jira.confapi.rest;
 
+import com.atlassian.application.api.ApplicationKey;
 import com.atlassian.jira.license.LicenseDetails;
-import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
+import de.aservo.atlassian.confapi.constants.ConfAPI;
+import de.aservo.atlassian.confapi.model.LicenseBean;
+import de.aservo.atlassian.confapi.model.LicensesBean;
+import de.aservo.atlassian.confapi.rest.LicenseResourceInterface;
 import de.aservo.atlassian.jira.confapi.JiraApplicationHelper;
 import de.aservo.atlassian.jira.confapi.JiraWebAuthenticationHelper;
-import de.aservo.atlassian.jira.confapi.bean.LicenseBean;
-import de.aservo.atlassian.jira.confapi.bean.LicensesBean;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -20,15 +22,15 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
  * Licenses resource to get the licenses.
  */
-@Path("/licenses")
-@AnonymousAllowed
+@Path(ConfAPI.LICENSES)
 @Produces(MediaType.APPLICATION_JSON)
 @Component
-public class LicensesResource {
+public class LicensesResource implements LicenseResourceInterface {
 
     private final JiraApplicationHelper applicationHelper;
 
@@ -50,15 +52,20 @@ public class LicensesResource {
     }
 
     @GET
+    @Override
     public Response getLicenses() {
         webAuthenticationHelper.mustBeSysAdmin();
 
-        final Collection<LicenseDetails> licenseDetails = applicationHelper.getLicenses();
-        return Response.ok(LicensesBean.from(licenseDetails)).build();
+        final Collection<LicenseBean> licenseBeans = applicationHelper.getLicenses().stream()
+                .map(this::createLicenseBean)
+                .collect(Collectors.toList());
+
+        return Response.ok(new LicensesBean(licenseBeans)).build();
     }
 
     @PUT
     @Consumes(MediaType.TEXT_PLAIN)
+    @Override
     public Response setLicense(
             @QueryParam("clear") @DefaultValue("false") boolean clear,
             final String licenseKey) throws WebApplicationException {
@@ -69,8 +76,26 @@ public class LicensesResource {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
 
-        final LicenseDetails licenseDetail = applicationHelper.setLicense(licenseKey, clear);
-        return Response.ok(LicenseBean.from(licenseDetail)).build();
+        final LicenseDetails licenseDetails = applicationHelper.setLicense(licenseKey, clear);
+        return Response.ok(createLicenseBean(licenseDetails)).build();
+    }
+
+    protected LicenseBean createLicenseBean(
+            final LicenseDetails licenseDetails) {
+
+        final LicenseBean licenseBean = new LicenseBean();
+
+        licenseBean.setLicenseType(licenseDetails.getLicenseType().name());
+        licenseBean.setOrganization(licenseDetails.getOrganisation());
+        licenseBean.setDescription(licenseDetails.getDescription());
+        licenseBean.setExpiryDate(licenseDetails.getMaintenanceExpiryDate());
+        licenseBean.setKey(licenseDetails.getLicenseString());
+        licenseBean.setProducts(licenseDetails.getLicensedApplications().getKeys().stream()
+                .map(ApplicationKey::value)
+                .collect(Collectors.toList())
+        );
+
+        return licenseBean;
     }
 
 }

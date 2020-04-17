@@ -6,6 +6,7 @@ import com.atlassian.jira.config.properties.APKeys;
 import com.atlassian.jira.config.properties.ApplicationProperties;
 import com.atlassian.jira.license.JiraLicenseManager;
 import com.atlassian.jira.license.LicenseDetails;
+import com.atlassian.jira.util.I18nHelper;
 import com.atlassian.jira.util.UrlValidator;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import com.google.common.collect.Lists;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.Collection;
+import java.util.Locale;
 
 @Component
 public class JiraApplicationHelper {
@@ -23,7 +25,8 @@ public class JiraApplicationHelper {
     @ComponentImport
     private final ApplicationProperties applicationProperties;
 
-    private final JiraI18nHelper i18nHelper;
+    @ComponentImport
+    private final I18nHelper.BeanFactory i18nBeanFactory;
 
     @ComponentImport
     private final JiraLicenseManager licenseManager;
@@ -35,19 +38,19 @@ public class JiraApplicationHelper {
      * Constructor.
      *
      * @param applicationProperties injected {@link ApplicationProperties}
-     * @param i18nHelper            injected {@link JiraI18nHelper}
+     * @param i18nBeanFactory       injected {@link I18nHelper.BeanFactory}
      * @param licenseManager        injected {@link JiraLicenseManager}
      * @param licenseService        injected {@link JiraLicenseService}
      */
     @Inject
     public JiraApplicationHelper(
             final ApplicationProperties applicationProperties,
-            final JiraI18nHelper i18nHelper,
+            final I18nHelper.BeanFactory i18nBeanFactory,
             final JiraLicenseManager licenseManager,
             final JiraLicenseService licenseService) {
 
         this.applicationProperties = applicationProperties;
-        this.i18nHelper = i18nHelper;
+        this.i18nBeanFactory = i18nBeanFactory;
         this.licenseManager = licenseManager;
         this.licenseService = licenseService;
     }
@@ -60,7 +63,7 @@ public class JiraApplicationHelper {
             @Nonnull final String baseUrl) {
 
         if (!UrlValidator.isValid(baseUrl)) {
-            throw new IllegalArgumentException(i18nHelper.getText("admin.errors.you.must.set.a.valid.base.url"));
+            throw new IllegalArgumentException("You must set a valid base url");
         }
 
         applicationProperties.setString(APKeys.JIRA_BASEURL, baseUrl);
@@ -78,7 +81,7 @@ public class JiraApplicationHelper {
         }
 
         if (mode.equalsIgnoreCase("public") && hasExternalUserManagement()) {
-            throw new IllegalArgumentException(i18nHelper.getText("admin.errors.invalid.mode.externalUM.combination"));
+            throw new IllegalArgumentException("Invalid mode / external user management combination");
         }
 
         applicationProperties.setString(APKeys.JIRA_MODE, mode);
@@ -92,11 +95,11 @@ public class JiraApplicationHelper {
             @Nonnull final String title) {
 
         if (!TextUtils.stringSet(title)) {
-            throw new IllegalArgumentException(i18nHelper.getText("admin.errors.you.must.set.an.application.title"));
+            throw new IllegalArgumentException("You must set an application title");
         }
 
         if (StringUtils.length(title) > 255) {
-            throw new IllegalArgumentException(i18nHelper.getText("admin.errors.invalid.length.of.an.application.title"));
+            throw new IllegalArgumentException("Invalid length of application title");
         }
 
         applicationProperties.setString(APKeys.JIRA_TITLE, title);
@@ -126,7 +129,7 @@ public class JiraApplicationHelper {
             final String key,
             boolean clear) {
 
-        final ValidationResult validationResult = licenseService.validate(i18nHelper.getI18nHelper(), key);
+        final ValidationResult validationResult = licenseService.validate(i18nBeanFactory.getInstance(Locale.getDefault()), key);
 
         if (validationResult.getErrorCollection().hasAnyErrors()) {
             throw new IllegalArgumentException("Specified license was invalid.");

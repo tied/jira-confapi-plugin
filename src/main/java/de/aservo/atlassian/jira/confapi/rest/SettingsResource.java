@@ -1,10 +1,10 @@
 package de.aservo.atlassian.jira.confapi.rest;
 
 import com.atlassian.jira.rest.api.util.ErrorCollection;
-import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
+import de.aservo.atlassian.confapi.constants.ConfAPI;
 import de.aservo.atlassian.jira.confapi.JiraApplicationHelper;
 import de.aservo.atlassian.jira.confapi.JiraWebAuthenticationHelper;
-import de.aservo.atlassian.jira.confapi.bean.SettingsBean;
+import de.aservo.atlassian.confapi.model.SettingsBean;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -19,8 +19,7 @@ import javax.ws.rs.core.Response;
 /**
  * Settings resource to get the licenses.
  */
-@Path("/settings")
-@AnonymousAllowed
+@Path(ConfAPI.SETTINGS)
 @Produces(MediaType.APPLICATION_JSON)
 @Component
 public class SettingsResource {
@@ -48,7 +47,9 @@ public class SettingsResource {
     public Response getSettings() {
         webAuthenticationHelper.mustBeSysAdmin();
 
-        final SettingsBean settingsBean = new SettingsBean(applicationHelper);
+        final SettingsBean settingsBean = new SettingsBean();
+        settingsBean.setTitle(applicationHelper.getTitle());
+        settingsBean.setBaseUrl(applicationHelper.getBaseUrl());
         return Response.ok(settingsBean).build();
     }
 
@@ -69,6 +70,7 @@ public class SettingsResource {
             }
         }
 
+        /*
         if (settingsBean.getMode() != null) {
             try {
                 applicationHelper.setMode(settingsBean.getMode());
@@ -76,6 +78,7 @@ public class SettingsResource {
                 errorCollection.addErrorMessage(e.getMessage());
             }
         }
+         */
 
         if (settingsBean.getTitle() != null) {
             try {

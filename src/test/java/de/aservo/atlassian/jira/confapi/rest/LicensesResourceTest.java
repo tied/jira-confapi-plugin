@@ -6,8 +6,8 @@ import com.atlassian.jira.license.LicensedApplications;
 import com.atlassian.jira.license.MockLicensedApplications;
 import de.aservo.atlassian.jira.confapi.JiraApplicationHelper;
 import de.aservo.atlassian.jira.confapi.JiraWebAuthenticationHelper;
-import de.aservo.atlassian.jira.confapi.bean.LicenseBean;
-import de.aservo.atlassian.jira.confapi.bean.LicensesBean;
+import de.aservo.atlassian.confapi.model.LicenseBean;
+import de.aservo.atlassian.confapi.model.LicensesBean;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,6 +22,7 @@ import javax.ws.rs.core.Response;
 import java.util.Collection;
 import java.util.Collections;
 
+import static com.atlassian.extras.api.LicenseType.COMMERCIAL;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Matchers.anyBoolean;
@@ -56,7 +57,9 @@ public class LicensesResourceTest {
         final LicensedApplications licensedApplications = new MockLicensedApplications(ApplicationKeys.CORE);
 
         mockLicenseDetail = mock(LicenseDetails.class);
+
         when(mockLicenseDetail.getLicenseString()).thenReturn(LICENSE);
+        when(mockLicenseDetail.getLicenseType()).thenReturn(COMMERCIAL);
         when(mockLicenseDetail.getLicensedApplications()).thenReturn(licensedApplications);
 
         when(applicationHelper.setLicense(Matchers.anyString(), anyBoolean())).thenReturn(mockLicenseDetail);
@@ -78,7 +81,7 @@ public class LicensesResourceTest {
         assertThat(responseEntity, instanceOf(LicensesBean.class));
 
         final LicensesBean licensesBean = (LicensesBean) responseEntity;
-        final LicenseBean licenseBean = LicenseBean.from(mockLicenseDetail);
+        final LicenseBean licenseBean = licenseResource.createLicenseBean(mockLicenseDetail);
 
         assertThat(licensesBean.getLicenses(), containsInAnyOrder(licenseBean));
     }
@@ -91,7 +94,7 @@ public class LicensesResourceTest {
         assertThat(responseEntity, instanceOf(LicenseBean.class));
 
         final LicenseBean licenseBean = (LicenseBean) responseEntity;
-        final LicenseBean mockLicenseBean = LicenseBean.from(mockLicenseDetail);
+        final LicenseBean mockLicenseBean = licenseResource.createLicenseBean(mockLicenseDetail);
 
         assertThat(licenseBean, equalTo(mockLicenseBean));
     }
