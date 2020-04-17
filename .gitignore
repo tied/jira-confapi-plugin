@@ -11,3 +11,5 @@
 
 # Private keys
 *.asc
+
+.openapi-generator*

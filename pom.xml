@@ -6,7 +6,7 @@
     <parent>
         <groupId>de.aservo</groupId>
         <artifactId>parent-pom</artifactId>
-        <version>0.0.6</version>
+        <version>0.0.9</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -84,13 +84,26 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
     <dependencies>
+
+        <!-- compile dependencies -->
+
         <dependency>
             <groupId>de.aservo.atlassian</groupId>
             <artifactId>confapi-commons</artifactId>
             <version>${confapi-commons.version}</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- provided dependencies -->
 
         <dependency>
             <groupId>com.atlassian.jira</groupId>
@@ -139,15 +152,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.atlassian.plugin</groupId>
-            <artifactId>atlassian-spring-scanner-annotation</artifactId>
-            <version>${atlassian.spring.scanner.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Other dependencies -->
-
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <scope>provided</scope>
@@ -162,6 +166,19 @@
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.plugin</groupId>
+            <artifactId>atlassian-spring-scanner-annotation</artifactId>
+            <version>${atlassian.spring.scanner.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -222,6 +239,7 @@
                         <Import-Package>
                             *;version="0";resolution:=optional
                         </Import-Package>
+                        <Export-Package/>
                         <Spring-Context>*</Spring-Context>
                     </instructions>
                 </configuration>
@@ -245,6 +263,50 @@
                         <goals>
                             <goal>atlassian-spring-scanner</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-maven-plugin</artifactId>
+                <version>${swagger.version}</version>
+                <configuration>
+                    <openapiFilePath>${basedir}/src/main/resources/openapi.yaml</openapiFilePath>
+                    <resourcePackages>
+                        <resourcePackage>de.aservo.atlassian.jira.confapi.rest</resourcePackage>
+                    </resourcePackages>
+                    <outputPath>${project.build.directory}</outputPath>
+                    <outputFormat>YAML</outputFormat>
+                    <prettyPrint>true</prettyPrint>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>resolve</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/openapi.yaml</inputSpec>
+                            <generatorName>asciidoc</generatorName>
+                            <output>${project.basedir}</output>
+                            <skipValidateSpec>true</skipValidateSpec>
+                            <additionalProperties>specDir=src/main/resources/doc/</additionalProperties>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

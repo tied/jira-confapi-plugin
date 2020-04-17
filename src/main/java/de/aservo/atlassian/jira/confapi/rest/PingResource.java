@@ -2,6 +2,7 @@ package de.aservo.atlassian.jira.confapi.rest;
 
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 import de.aservo.atlassian.confapi.constants.ConfAPI;
+import de.aservo.atlassian.confapi.rest.PingResourceInterface;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,18 +12,12 @@ import javax.ws.rs.core.Response;
 
 @Path(ConfAPI.PING)
 @AnonymousAllowed
-@Produces({MediaType.APPLICATION_JSON})
-public class PingResource {
+@Produces(MediaType.TEXT_PLAIN)
+public class PingResource implements PingResourceInterface {
 
-    public static final String PONG = "pong";
-
-    /**
-     * Simple ping method for probing the REST api. Returns 'pong' upon success
-     *
-     * @return response
-     */
     @GET
-    public Response get() {
+    @Override
+    public Response getPing() {
         return Response.ok(PONG).build();
     }
 

@@ -7,8 +7,6 @@
         <param name="plugin-logo">images/aservo.png</param>
     </plugin-info>
 
-    <resource type="i18n" name="i18n" location="aservo-jira-confapi"/>
-
     <web-resource key="aservo-confapi-jira-web-resource" name="ConfAPI Web Resource">
         <dependency>com.atlassian.auiplugin:ajs</dependency>
         <dependency>com.atlassian.auiplugin:aui-experimental-expander</dependency>
