@@ -1,8 +1,9 @@
-package de.aservo.atlassian.jira.confapi;
+package de.aservo.atlassian.jira.confapi.helper;
 
 import com.atlassian.jira.permission.GlobalPermissionKey;
 import com.atlassian.jira.security.GlobalPermissionManager;
 import com.atlassian.jira.user.MockApplicationUser;
+import de.aservo.atlassian.jira.confapi.service.JiraUserHelper;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

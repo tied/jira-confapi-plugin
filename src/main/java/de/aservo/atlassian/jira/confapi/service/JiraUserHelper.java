@@ -1,4 +1,4 @@
-package de.aservo.atlassian.jira.confapi;
+package de.aservo.atlassian.jira.confapi.service;
 
 import com.atlassian.jira.security.JiraAuthenticationContext;
 import com.atlassian.jira.user.ApplicationUser;

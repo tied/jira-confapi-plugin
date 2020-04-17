@@ -1,9 +1,10 @@
-package de.aservo.atlassian.jira.confapi;
+package de.aservo.atlassian.jira.confapi.helper;
 
 import com.atlassian.jira.bc.license.JiraLicenseService;
 import com.atlassian.jira.license.JiraLicenseManager;
 import com.atlassian.jira.mock.MockApplicationProperties;
 import com.atlassian.jira.web.bean.MockI18nBean;
+import de.aservo.atlassian.jira.confapi.service.JiraApplicationHelper;
 
 import static org.mockito.Mockito.mock;
 

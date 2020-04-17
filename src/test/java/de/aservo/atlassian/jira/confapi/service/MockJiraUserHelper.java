@@ -1,8 +1,9 @@
-package de.aservo.atlassian.jira.confapi;
+package de.aservo.atlassian.jira.confapi.service;
 
 import com.atlassian.jira.mock.security.MockAuthenticationContext;
 import com.atlassian.jira.user.MockApplicationUser;
 import com.atlassian.jira.user.MockUserPropertyManager;
+import de.aservo.atlassian.jira.confapi.service.JiraUserHelper;
 
 public class MockJiraUserHelper extends JiraUserHelper {
 

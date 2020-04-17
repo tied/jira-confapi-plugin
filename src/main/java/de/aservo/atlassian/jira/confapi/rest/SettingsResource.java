@@ -4,8 +4,8 @@ import com.atlassian.jira.rest.api.util.ErrorCollection;
 import de.aservo.atlassian.confapi.constants.ConfAPI;
 import de.aservo.atlassian.confapi.model.SettingsBean;
 import de.aservo.atlassian.confapi.rest.SettingsResourceInterface;
-import de.aservo.atlassian.jira.confapi.JiraApplicationHelper;
-import de.aservo.atlassian.jira.confapi.JiraWebAuthenticationHelper;
+import de.aservo.atlassian.jira.confapi.service.JiraApplicationHelper;
+import de.aservo.atlassian.jira.confapi.helper.JiraWebAuthenticationHelper;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;

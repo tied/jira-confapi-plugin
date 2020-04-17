@@ -6,8 +6,8 @@ import de.aservo.atlassian.confapi.constants.ConfAPI;
 import de.aservo.atlassian.confapi.model.LicenseBean;
 import de.aservo.atlassian.confapi.model.LicensesBean;
 import de.aservo.atlassian.confapi.rest.LicenseResourceInterface;
-import de.aservo.atlassian.jira.confapi.JiraApplicationHelper;
-import de.aservo.atlassian.jira.confapi.JiraWebAuthenticationHelper;
+import de.aservo.atlassian.jira.confapi.service.JiraApplicationHelper;
+import de.aservo.atlassian.jira.confapi.helper.JiraWebAuthenticationHelper;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
