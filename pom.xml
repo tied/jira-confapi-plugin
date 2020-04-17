@@ -210,6 +210,7 @@
                     <systemPropertyVariables>
                         <atlassian.mail.senddisabled>false</atlassian.mail.senddisabled>
                     </systemPropertyVariables>
+                    <enableQuickReload>true</enableQuickReload>
                     <applications>
                         <application>
                             <applicationKey>jira-software</applicationKey>

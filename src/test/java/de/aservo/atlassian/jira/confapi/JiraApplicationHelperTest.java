@@ -10,6 +10,7 @@ import com.atlassian.jira.mock.MockApplicationProperties;
 import com.atlassian.jira.util.ErrorCollection;
 import com.atlassian.jira.util.I18nHelper;
 import com.atlassian.jira.util.SimpleErrorCollection;
+import com.atlassian.jira.web.bean.MockI18nBean;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -60,7 +61,7 @@ public class JiraApplicationHelperTest {
 
         applicationHelper = new JiraApplicationHelper(
                 new MockApplicationProperties(),
-                new MockJiraI18nHelper(),
+                new MockI18nBean.MockI18nBeanFactory(),
                 licenseManager,
                 licenseService);
     }
