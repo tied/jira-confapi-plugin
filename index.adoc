@@ -31,6 +31,184 @@ This plugin provides methods for accessing configuration for Jira.
 == Endpoints
 
 
+[.Directories]
+=== Directories
+
+
+[.addDirectory]
+==== addDirectory
+    
+`PUT /directories`
+
+Add a new directory
+
+===== Description 
+
+Any existing directory with the same name will be removed before adding the new one
+
+
+// markup not found, no include::{specDir}directories/PUT/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| DirectoryBean 
+|  <<DirectoryBean>> 
+| - 
+|  
+|  
+
+|===         
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| testConnection 
+|   
+| - 
+| null 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<DirectoryBean>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| 
+|  <<DirectoryBean>>
+
+
+| 400
+| 
+|  <<ErrorCollection>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}directories/PUT/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}directories/PUT/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :directories/PUT/PUT.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}directories/PUT/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.getDirectories]
+==== getDirectories
+    
+`GET /directories`
+
+Get the list of user directories
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}directories/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+
+
+===== Return Type
+
+<<DirectoryBean>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| 
+|  <<DirectoryBean>>
+
+
+| 400
+| 
+|  <<ErrorCollection>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}directories/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}directories/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :directories/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}directories/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
 [.Licenses]
 === Licenses
 
@@ -766,6 +944,91 @@ endif::internal-generation[]
 
 [#models]
 == Models
+
+
+[#DirectoryBean]
+=== _DirectoryBean_ 
+
+
+
+[.fields-DirectoryBean]
+[cols="2,1,2,4,1"]
+|===         
+| Field Name| Required| Type| Description| Format
+
+| active 
+|  
+| Boolean  
+| 
+|  
+
+| name 
+| X 
+| String  
+| 
+|  
+
+| clientName 
+| X 
+| String  
+| 
+|  
+
+| type 
+| X 
+| String  
+| 
+|  _Enum:_ UNKNOWN, INTERNAL, CONNECTOR, CUSTOM, DELEGATING, CROWD, 
+
+| description 
+|  
+| String  
+| 
+|  
+
+| crowdUrl 
+| X 
+| String  
+| 
+|  
+
+| appPassword 
+| X 
+| String  
+| 
+|  
+
+| implClass 
+| X 
+| String  
+| 
+|  
+
+| proxyHost 
+|  
+| String  
+| 
+|  
+
+| proxyPort 
+|  
+| String  
+| 
+|  
+
+| proxyUsername 
+|  
+| String  
+| 
+|  
+
+| proxyPassword 
+|  
+| String  
+| 
+|  
+
+|===
 
 
 [#ErrorCollection]
