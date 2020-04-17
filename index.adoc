@@ -1,0 +1,562 @@
+= ConfAPI for Jira
+github@aservo.com
+1
+:toc: left
+:numbered:
+:toclevels: 3
+:source-highlighter: highlightjs
+:keywords: openapi, rest, ConfAPI for Jira 
+:specDir: src/main/resources/doc/
+:snippetDir: 
+:generator-template: v1 2019-12-20
+:info-url: https://github.com/aservo/jira-confapi-plugin
+:app-name: ConfAPI for Jira
+
+[abstract]
+.Abstract
+This plugin provides methods for accessing configuration for Jira.
+
+
+// markup not found, no include::{specDir}intro.adoc[opts=optional]
+
+
+== Access
+
+* *HTTP Basic* Authentication _basicAuth_
+
+
+
+
+
+== Endpoints
+
+
+[.Licenses]
+=== Licenses
+
+
+[.getLicenses]
+==== getLicenses
+    
+`GET /licenses`
+
+Get all licenses information
+
+===== Description 
+
+Upon successful request, returns a `LicensesBean` object containing license details
+
+
+// markup not found, no include::{specDir}licenses/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+
+
+===== Return Type
+
+<<LicensesBean>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| 
+|  <<LicensesBean>>
+
+
+| 400
+| 
+|  <<ErrorCollection>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}licenses/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}licenses/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :licenses/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}licenses/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.setLicense]
+==== setLicense
+    
+`PUT /licenses`
+
+Set a new license
+
+===== Description 
+
+Existing license details are overwritten. Upon successful request, returns a `LicensesBean` object containing license details
+
+
+// markup not found, no include::{specDir}licenses/PUT/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| body 
+|  <<string>> 
+| - 
+|  
+|  
+
+|===         
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| clear 
+| Clears license details before updating (Jira only).  
+| - 
+| false 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<LicensesBean>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| 
+|  <<LicensesBean>>
+
+
+| 400
+| 
+|  <<ErrorCollection>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}licenses/PUT/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}licenses/PUT/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :licenses/PUT/PUT.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}licenses/PUT/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.Ping]
+=== Ping
+
+
+[.getPing]
+==== getPing
+    
+`GET /ping`
+
+Simple ping method for probing the REST api. Returns 'pong' upon success
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}ping/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+
+
+===== Return Type
+
+
+
+-
+
+===== Content Type
+
+* text/plain
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 0
+| default response
+|  <<>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}ping/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}ping/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :ping/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}ping/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.Settings]
+=== Settings
+
+
+[.getSettings]
+==== getSettings
+    
+`GET /settings`
+
+Get the application settings
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}settings/GET/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+
+
+
+
+
+===== Return Type
+
+<<SettingsBean>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| 
+|  <<SettingsBean>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}settings/GET/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}settings/GET/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :settings/GET/GET.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}settings/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.setSettings]
+==== setSettings
+    
+`PUT /settings`
+
+Set the application settings
+
+===== Description 
+
+
+
+
+// markup not found, no include::{specDir}settings/PUT/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| SettingsBean 
+|  <<SettingsBean>> 
+| X 
+|  
+|  
+
+|===         
+
+
+
+
+
+===== Return Type
+
+<<SettingsBean>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| 
+|  <<SettingsBean>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}settings/PUT/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}settings/PUT/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :settings/PUT/PUT.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}settings/PUT/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[#models]
+== Models
+
+
+[#ErrorCollection]
+=== _ErrorCollection_ 
+
+
+
+[.fields-ErrorCollection]
+[cols="2,1,2,4,1"]
+|===         
+| Field Name| Required| Type| Description| Format
+
+| errorMessages 
+|  
+| List  of <<string>> 
+| 
+|  
+
+|===
+
+
+[#LicenseBean]
+=== _LicenseBean_ 
+
+
+
+[.fields-LicenseBean]
+[cols="2,1,2,4,1"]
+|===         
+| Field Name| Required| Type| Description| Format
+
+| licenseType 
+|  
+| String  
+| 
+|  
+
+| organization 
+|  
+| String  
+| 
+|  
+
+| description 
+|  
+| String  
+| 
+|  
+
+| expiryDate 
+|  
+| Date  
+| 
+| date-time 
+
+| numUsers 
+|  
+| Integer  
+| 
+| int32 
+
+| key 
+|  
+| String  
+| 
+|  
+
+| products 
+|  
+| List  of <<string>> 
+| 
+|  
+
+|===
+
+
+[#LicensesBean]
+=== _LicensesBean_ 
+
+
+
+[.fields-LicensesBean]
+[cols="2,1,2,4,1"]
+|===         
+| Field Name| Required| Type| Description| Format
+
+| licenses 
+|  
+| List  of <<LicenseBean>> 
+| 
+|  
+
+|===
+
+
+[#SettingsBean]
+=== _SettingsBean_ 
+
+
+
+[.fields-SettingsBean]
+[cols="2,1,2,4,1"]
+|===         
+| Field Name| Required| Type| Description| Format
+
+| baseUrl 
+|  
+| String  
+| 
+|  
+
+| title 
+|  
+| String  
+| 
+|  
+
+|===
+
+

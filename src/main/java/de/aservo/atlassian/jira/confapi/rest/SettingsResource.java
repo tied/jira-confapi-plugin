@@ -2,9 +2,10 @@ package de.aservo.atlassian.jira.confapi.rest;
 
 import com.atlassian.jira.rest.api.util.ErrorCollection;
 import de.aservo.atlassian.confapi.constants.ConfAPI;
+import de.aservo.atlassian.confapi.model.SettingsBean;
+import de.aservo.atlassian.confapi.rest.SettingsResourceInterface;
 import de.aservo.atlassian.jira.confapi.JiraApplicationHelper;
 import de.aservo.atlassian.jira.confapi.JiraWebAuthenticationHelper;
-import de.aservo.atlassian.confapi.model.SettingsBean;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -22,7 +23,7 @@ import javax.ws.rs.core.Response;
 @Path(ConfAPI.SETTINGS)
 @Produces(MediaType.APPLICATION_JSON)
 @Component
-public class SettingsResource {
+public class SettingsResource implements SettingsResourceInterface {
 
     private final JiraApplicationHelper applicationHelper;
 
@@ -44,6 +45,7 @@ public class SettingsResource {
     }
 
     @GET
+    @Override
     public Response getSettings() {
         webAuthenticationHelper.mustBeSysAdmin();
 
@@ -55,6 +57,7 @@ public class SettingsResource {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
+    @Override
     public Response setSettings(
             final SettingsBean settingsBean) {
 
