@@ -15,7 +15,7 @@ jobs:
           key: confapi-plugin-{{ checksum "pom.xml" }}
       - run:
           name: Download Dependencies
-          command: ./mvnw dependency:go-offline
+          command: ./mvnw dependency:go-offline -U
       - run:
           name: Compile and Package
           command: ./mvnw package -DskipTests
