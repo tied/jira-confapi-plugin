@@ -4,24 +4,15 @@ import com.atlassian.jira.rest.api.util.ErrorCollection;
 import de.aservo.atlassian.confapi.constants.ConfAPI;
 import de.aservo.atlassian.confapi.model.SettingsBean;
 import de.aservo.atlassian.confapi.rest.api.SettingsResource;
-import de.aservo.atlassian.jira.confapi.service.JiraApplicationHelper;
 import de.aservo.atlassian.jira.confapi.helper.JiraWebAuthenticationHelper;
+import de.aservo.atlassian.jira.confapi.service.JiraApplicationHelper;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * Settings resource to get the licenses.
- */
 @Path(ConfAPI.SETTINGS)
-@Produces(MediaType.APPLICATION_JSON)
 @Component
 public class SettingsResourceImpl implements SettingsResource {
 
@@ -29,12 +20,6 @@ public class SettingsResourceImpl implements SettingsResource {
 
     private final JiraWebAuthenticationHelper webAuthenticationHelper;
 
-    /**
-     * Constructor.
-     *
-     * @param applicationHelper       the injected {@link JiraApplicationHelper}
-     * @param webAuthenticationHelper the injected {@link JiraWebAuthenticationHelper}
-     */
     @Inject
     public SettingsResourceImpl(
             final JiraApplicationHelper applicationHelper,
@@ -44,7 +29,6 @@ public class SettingsResourceImpl implements SettingsResource {
         this.webAuthenticationHelper = webAuthenticationHelper;
     }
 
-    @GET
     @Override
     public Response getSettings() {
         webAuthenticationHelper.mustBeSysAdmin();
@@ -55,8 +39,6 @@ public class SettingsResourceImpl implements SettingsResource {
         return Response.ok(settingsBean).build();
     }
 
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
     @Override
     public Response setSettings(
             final SettingsBean settingsBean) {

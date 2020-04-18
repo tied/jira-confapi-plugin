@@ -62,7 +62,7 @@ Any existing directory with the same name will be removed before adding the new 
 
 | DirectoryBean 
 |  <<DirectoryBean>> 
-| - 
+| X 
 |  
 |  
 
@@ -314,7 +314,7 @@ Existing license details are overwritten. Upon successful request, returns a `Li
 
 | body 
 |  <<string>> 
-| - 
+| X 
 |  
 |  
 
@@ -566,7 +566,7 @@ Set the default POP mail server
 
 | MailServerPopBean 
 |  <<MailServerPopBean>> 
-| - 
+| X 
 |  
 |  
 
@@ -653,7 +653,7 @@ Set the default SMTP mail server
 
 | MailServerSmtpBean 
 |  <<MailServerSmtpBean>> 
-| - 
+| X 
 |  
 |  
 
@@ -749,7 +749,7 @@ Simple ping method for probing the REST api. Returns 'pong' upon success
 
 ===== Content Type
 
-* text/plain
+* application/json
 
 ===== Responses
 
@@ -887,7 +887,7 @@ Set the application settings
 
 | SettingsBean 
 |  <<SettingsBean>> 
-| - 
+| X 
 |  
 |  
 
