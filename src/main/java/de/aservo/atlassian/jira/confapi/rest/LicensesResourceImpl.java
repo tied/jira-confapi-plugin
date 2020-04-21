@@ -5,7 +5,7 @@ import com.atlassian.jira.license.LicenseDetails;
 import de.aservo.atlassian.confapi.constants.ConfAPI;
 import de.aservo.atlassian.confapi.model.LicenseBean;
 import de.aservo.atlassian.confapi.model.LicensesBean;
-import de.aservo.atlassian.confapi.rest.api.LicenseResource;
+import de.aservo.atlassian.confapi.rest.api.LicensesResource;
 import de.aservo.atlassian.jira.confapi.helper.JiraWebAuthenticationHelper;
 import de.aservo.atlassian.jira.confapi.service.JiraApplicationHelper;
 import org.springframework.stereotype.Component;
@@ -14,15 +14,18 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Path(ConfAPI.LICENSES)
+@Produces(MediaType.APPLICATION_JSON)
 @Component
-public class LicensesResourceImpl implements LicenseResource {
+public class LicensesResourceImpl implements LicensesResource {
 
     private final JiraApplicationHelper applicationHelper;
 
