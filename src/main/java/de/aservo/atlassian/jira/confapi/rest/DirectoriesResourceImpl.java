@@ -1,6 +1,7 @@
 package de.aservo.atlassian.jira.confapi.rest;
 
 import de.aservo.atlassian.confapi.constants.ConfAPI;
+import de.aservo.atlassian.confapi.model.DirectoriesBean;
 import de.aservo.atlassian.confapi.model.DirectoryBean;
 import de.aservo.atlassian.confapi.model.ErrorCollection;
 import de.aservo.atlassian.confapi.rest.api.DirectoriesResource;
@@ -16,7 +17,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
@@ -39,8 +39,8 @@ public class DirectoriesResourceImpl implements DirectoriesResource {
     public Response getDirectories() {
         final ErrorCollection errorCollection = new ErrorCollection();
         try {
-            List<DirectoryBean> directories = directoryService.getDirectories();
-            return Response.ok(directories).build();
+            final DirectoriesBean directoriesBean = new DirectoriesBean(directoryService.getDirectories());
+            return Response.ok(directoriesBean).build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             errorCollection.addErrorMessage(e.getMessage());

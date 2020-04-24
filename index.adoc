@@ -161,7 +161,7 @@ Get the list of user directories
 
 ===== Return Type
 
-<<DirectoryBean>>
+<<DirectoriesBean>>
 
 
 ===== Content Type
@@ -178,7 +178,7 @@ Get the list of user directories
 
 | 200
 | 
-|  <<DirectoryBean>>
+|  <<DirectoriesBean>>
 
 
 | 400
@@ -946,6 +946,25 @@ endif::internal-generation[]
 == Models
 
 
+[#DirectoriesBean]
+=== _DirectoriesBean_ 
+
+
+
+[.fields-DirectoriesBean]
+[cols="2,1,2,4,1"]
+|===         
+| Field Name| Required| Type| Description| Format
+
+| directories 
+|  
+| List  of <<DirectoryBean>> 
+| 
+|  
+
+|===
+
+
 [#DirectoryBean]
 === _DirectoryBean_ 
 
@@ -1281,6 +1300,12 @@ endif::internal-generation[]
 | Field Name| Required| Type| Description| Format
 
 | baseUrl 
+|  
+| String  
+| 
+|  
+
+| mode 
 |  
 | String  
 | 
