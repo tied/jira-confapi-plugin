@@ -60,7 +60,6 @@ public class SettingsResourceImpl implements SettingsResource {
             }
         }
 
-        /*
         if (settingsBean.getMode() != null) {
             try {
                 applicationHelper.setMode(settingsBean.getMode());
@@ -68,7 +67,6 @@ public class SettingsResourceImpl implements SettingsResource {
                 errorCollection.addErrorMessage(e.getMessage());
             }
         }
-         */
 
         if (settingsBean.getTitle() != null) {
             try {
