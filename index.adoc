@@ -35,106 +35,6 @@ This plugin provides methods for accessing configuration for Jira.
 === Directories
 
 
-[.addDirectory]
-==== addDirectory
-    
-`PUT /directories`
-
-Add a new directory
-
-===== Description 
-
-Any existing directory with the same name will be removed before adding the new one
-
-
-// markup not found, no include::{specDir}directories/PUT/spec.adoc[opts=optional]
-
-
-
-===== Parameters
-
-
-===== Body Parameter
-
-[cols="2,3,1,1,1"]
-|===         
-|Name| Description| Required| Default| Pattern
-
-| DirectoryBean 
-|  <<DirectoryBean>> 
-| X 
-|  
-|  
-
-|===         
-
-
-
-====== Query Parameters
-
-[cols="2,3,1,1,1"]
-|===         
-|Name| Description| Required| Default| Pattern
-
-| testConnection 
-|   
-| - 
-| null 
-|  
-
-|===         
-
-
-===== Return Type
-
-<<DirectoryBean>>
-
-
-===== Content Type
-
-* application/json
-
-===== Responses
-
-.http response codes
-[cols="2,3,1"]
-|===         
-| Code | Message | Datatype 
-
-
-| 200
-| 
-|  <<DirectoryBean>>
-
-
-| 400
-| 
-|  <<ErrorCollection>>
-
-|===         
-
-===== Samples
-
-
-// markup not found, no include::{snippetDir}directories/PUT/http-request.adoc[opts=optional]
-
-
-// markup not found, no include::{snippetDir}directories/PUT/http-response.adoc[opts=optional]
-
-
-
-// file not found, no * wiremock data link :directories/PUT/PUT.json[]
-
-
-ifdef::internal-generation[]
-===== Implementation
-
-// markup not found, no include::{specDir}directories/PUT/implementation.adoc[opts=optional]
-
-
-endif::internal-generation[]
-
-
 [.getDirectories]
 ==== getDirectories
     
@@ -204,6 +104,106 @@ ifdef::internal-generation[]
 ===== Implementation
 
 // markup not found, no include::{specDir}directories/GET/implementation.adoc[opts=optional]
+
+
+endif::internal-generation[]
+
+
+[.setDirectory]
+==== setDirectory
+    
+`PUT /directories`
+
+Add a new directory
+
+===== Description 
+
+Any existing directory with the same name will be removed before adding the new one
+
+
+// markup not found, no include::{specDir}directories/PUT/spec.adoc[opts=optional]
+
+
+
+===== Parameters
+
+
+===== Body Parameter
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| DirectoryBean 
+|  <<DirectoryBean>> 
+| X 
+|  
+|  
+
+|===         
+
+
+
+====== Query Parameters
+
+[cols="2,3,1,1,1"]
+|===         
+|Name| Description| Required| Default| Pattern
+
+| testConnection 
+|   
+| - 
+| false 
+|  
+
+|===         
+
+
+===== Return Type
+
+<<DirectoryBean>>
+
+
+===== Content Type
+
+* application/json
+
+===== Responses
+
+.http response codes
+[cols="2,3,1"]
+|===         
+| Code | Message | Datatype 
+
+
+| 200
+| 
+|  <<DirectoryBean>>
+
+
+| 400
+| 
+|  <<ErrorCollection>>
+
+|===         
+
+===== Samples
+
+
+// markup not found, no include::{snippetDir}directories/PUT/http-request.adoc[opts=optional]
+
+
+// markup not found, no include::{snippetDir}directories/PUT/http-response.adoc[opts=optional]
+
+
+
+// file not found, no * wiremock data link :directories/PUT/PUT.json[]
+
+
+ifdef::internal-generation[]
+===== Implementation
+
+// markup not found, no include::{specDir}directories/PUT/implementation.adoc[opts=optional]
 
 
 endif::internal-generation[]

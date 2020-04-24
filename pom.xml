@@ -53,7 +53,7 @@
         <atlassian.ajp.port>8209</atlassian.ajp.port>
         <atlassian.amps.version>8.0.2</atlassian.amps.version>
         <atlassian.plugin.key>${project.groupId}.${project.artifactId}</atlassian.plugin.key>
-        <confapi-commons.version>0.0.2-SNAPSHOT</confapi-commons.version>
+        <confapi-commons.version>0.0.3-SNAPSHOT</confapi-commons.version>
         <atlassian.spring.scanner.version>2.1.5</atlassian.spring.scanner.version>
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
