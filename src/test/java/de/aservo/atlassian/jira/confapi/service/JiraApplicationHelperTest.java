@@ -14,7 +14,6 @@ import com.atlassian.jira.web.bean.MockI18nBean;
 import de.aservo.atlassian.jira.confapi.helper.MockJiraApplicationHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -93,12 +92,6 @@ public class JiraApplicationHelperTest {
         final String mode = "other";
         expectedException.expect(IllegalArgumentException.class);
         applicationHelper.setMode(mode);
-    }
-
-    @Test
-    @Ignore
-    public void testSetModeCombinationInvalid() {
-        // TODO: Different to solve as currently implemented
     }
 
     @Test
