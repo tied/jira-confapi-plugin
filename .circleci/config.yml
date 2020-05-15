@@ -97,7 +97,7 @@ jobs:
           command: ./mvnw dependency:copy -Dartifact=de.aservo:atlassian-plugin-compatibility-check:0.0.1 -DoutputDirectory=.
       - run:
           name: Run APCC
-          command: java -jar de.aservo:atlassian-plugin-compatibility-check:0.0.1.jar "jira.version"
+          command: java -jar atlassian-plugin-compatibility-check-0.0.1.jar "jira.version"
       - save_cache:
           paths:
             - ~/.m2
