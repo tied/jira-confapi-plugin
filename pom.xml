@@ -48,7 +48,7 @@
     </developers>
 
     <properties>
-        <jira.version>7.9.2</jira.version>
+        <jira.version>8.8.1</jira.version>
         <!-- other properties -->
         <atlassian.ajp.port>8209</atlassian.ajp.port>
         <atlassian.amps.version>8.0.2</atlassian.amps.version>
