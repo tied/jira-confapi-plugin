@@ -9,12 +9,13 @@ import com.atlassian.mail.server.impl.PopMailServerImpl;
 import com.atlassian.mail.server.impl.SMTPMailServerImpl;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import de.aservo.atlassian.confapi.constants.ConfAPI;
-import de.aservo.atlassian.confapi.exception.NoContentException;
 import de.aservo.atlassian.confapi.model.ErrorCollection;
 import de.aservo.atlassian.confapi.model.MailServerPopBean;
 import de.aservo.atlassian.confapi.model.MailServerSmtpBean;
 import de.aservo.atlassian.confapi.rest.api.MailServerResource;
-import de.aservo.atlassian.confapi.util.MailProtocolUtil;
+import de.aservo.atlassian.jira.confapi.model.util.MailServerPopBeanUtil;
+import de.aservo.atlassian.jira.confapi.model.util.MailServerSmtpBeanUtil;
+import de.aservo.atlassian.jira.confapi.util.MailProtocolUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,17 +49,15 @@ public class MailServerResourceImpl implements MailServerResource {
 
     @Override
     public Response getMailServerPop() {
-        final ErrorCollection errorCollection = new ErrorCollection();
+        final PopMailServer popMailServer = mailServerManager.getDefaultPopMailServer();
+        final MailServerPopBean bean = MailServerPopBeanUtil.toMailServerPopBean(popMailServer);
 
-        try {
-            final PopMailServer popMailServer = mailServerManager.getDefaultPopMailServer();
-            final MailServerPopBean bean = MailServerPopBean.from(popMailServer);
+        if (bean != null) {
             return Response.ok(bean).build();
-        } catch (NoContentException e) {
-            log.error(e.getMessage(), e);
-            errorCollection.addErrorMessage(e.getMessage());
         }
 
+        final ErrorCollection errorCollection = new ErrorCollection();
+        errorCollection.addErrorMessage("No default POP mail server configured");
         return Response.status(Response.Status.NO_CONTENT).entity(errorCollection).build();
     }
 
@@ -118,17 +117,15 @@ public class MailServerResourceImpl implements MailServerResource {
 
     @Override
     public Response getMailServerSmtp() {
-        final ErrorCollection errorCollection = new ErrorCollection();
+        final SMTPMailServer smtpMailServer = mailServerManager.getDefaultSMTPMailServer();
+        final MailServerSmtpBean bean = MailServerSmtpBeanUtil.toMailServerSmtpBean(smtpMailServer);
 
-        try {
-            final SMTPMailServer smtpMailServer = mailServerManager.getDefaultSMTPMailServer();
-            final MailServerSmtpBean bean = MailServerSmtpBean.from(smtpMailServer);
+        if (bean != null) {
             return Response.ok(bean).build();
-        } catch (NoContentException e) {
-            log.error(e.getMessage(), e);
-            errorCollection.addErrorMessage(e.getMessage());
         }
 
+        final ErrorCollection errorCollection = new ErrorCollection();
+        errorCollection.addErrorMessage("No default SMTP mail server configured");
         return Response.status(Response.Status.NO_CONTENT).entity(errorCollection).build();
     }
 

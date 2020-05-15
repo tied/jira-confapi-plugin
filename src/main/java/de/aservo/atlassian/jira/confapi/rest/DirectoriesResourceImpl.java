@@ -20,6 +20,4 @@ public class DirectoriesResourceImpl extends AbstractDirectoriesResourceImpl {
         super(directoryService);
     }
 
-    // Completely inhering the implementation of AbstractDirectoriesResourceImpl
-
 }
