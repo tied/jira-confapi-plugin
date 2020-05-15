@@ -82,6 +82,26 @@ jobs:
           paths:
             - ~/.m2
           key: confapi-plugin-{{ checksum "pom.xml" }}
+  apcc:
+    executor: maven
+    steps:
+      - attach_workspace:
+          at: /tmp/build
+      - restore_cache:
+          key: confapi-plugin-{{ checksum "pom.xml" }}
+      - run:
+          name: Download APCC
+          command: ./mvnw dependency:get -DgroupId=de.aservo -DartifactId=atlassian-plugin-compatibility-check -Dversion=0.0.1
+      - run:
+          name: Copy APCC to current Directory
+          command: ./mvnw dependency:copy -Dartifact=de.aservo:atlassian-plugin-compatibility-check:0.0.1 -DoutputDirectory=.
+      - run:
+          name: Run APCC
+          command: java -jar de.aservo:atlassian-plugin-compatibility-check:0.0.1.jar "jira.version"
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: confapi-plugin-{{ checksum "pom.xml" }}
 
 workflows:
   main:
@@ -102,3 +122,9 @@ workflows:
             branches:
               only: master
           context: deploy-maven
+      - apcc:
+          requires:
+            - deploy
+          filters:
+            branches:
+              only: master
