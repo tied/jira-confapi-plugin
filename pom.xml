@@ -57,10 +57,6 @@
         <confapi-commons.version>0.0.6-SNAPSHOT</confapi-commons.version>
         <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
         <javax.el-api.version>2.2.4</javax.el-api.version>
-        <junit.version>4.12</junit.version>
-        <lombok.version>1.18.10</lombok.version>
-        <mockito.version>1.10.19</mockito.version>
-        <wink-client.version>1.4</wink-client.version>
     </properties>
 
     <dependencyManagement>
@@ -102,9 +98,19 @@
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
-            <version>${swagger.version}</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- behaves like a compile dependency -->
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+            <version>1.18.10</version>
+        </dependency>
+
+        <!-- provided dependencies -->
 
         <!-- provided dependencies -->
 
@@ -179,6 +185,13 @@
         </dependency>
 
         <dependency>
+            <groupId>com.atlassian.plugin</groupId>
+            <artifactId>atlassian-spring-scanner-annotation</artifactId>
+            <version>${atlassian.spring.scanner.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <scope>provided</scope>
@@ -203,20 +216,18 @@
         </dependency>
 
         <dependency>
-            <groupId>com.atlassian.plugin</groupId>
-            <artifactId>atlassian-spring-scanner-annotation</artifactId>
-            <version>${atlassian.spring.scanner.version}</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
             <scope>provided</scope>
         </dependency>
 
-        <!-- Test dependencies -->
+        <!-- test dependencies -->
 
         <dependency>
             <groupId>de.aservo.atlassian</groupId>
@@ -235,22 +246,22 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
+            <version>4.12</version>
         </dependency>
 
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>${mockito.version}</version>
             <scope>test</scope>
+            <version>2.28.2</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.wink</groupId>
             <artifactId>wink-client</artifactId>
-            <version>${wink-client.version}</version>
             <scope>test</scope>
+            <version>1.4</version>
         </dependency>
 
         <dependency>

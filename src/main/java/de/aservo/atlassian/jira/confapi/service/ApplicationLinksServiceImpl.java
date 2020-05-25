@@ -17,11 +17,11 @@ import com.atlassian.plugin.spring.scanner.annotation.export.ExportAsService;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import de.aservo.atlassian.confapi.exception.BadRequestException;
 import de.aservo.atlassian.confapi.model.ApplicationLinkBean;
+import de.aservo.atlassian.confapi.model.ApplicationLinksBean;
 import de.aservo.atlassian.confapi.model.type.ApplicationLinkTypes;
-import de.aservo.atlassian.confapi.service.api.ApplicationLinkService;
+import de.aservo.atlassian.confapi.service.api.ApplicationLinksService;
 import de.aservo.atlassian.jira.confapi.model.type.DefaultAuthenticationScenario;
 import de.aservo.atlassian.jira.confapi.model.util.ApplicationLinkBeanUtil;
-import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -38,10 +38,10 @@ import static de.aservo.atlassian.confapi.util.BeanValidationUtil.validate;
  * The type Application link service.
  */
 @Component
-@ExportAsService(ApplicationLinkService.class)
-public class ApplicationLinkServiceImpl implements ApplicationLinkService {
+@ExportAsService(ApplicationLinksService.class)
+public class ApplicationLinksServiceImpl implements ApplicationLinksService {
 
-    private static final Logger log = LoggerFactory.getLogger(ApplicationLinkServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(ApplicationLinksServiceImpl.class);
 
     private final MutatingApplicationLinkService mutatingApplicationLinkService;
     private final TypeAccessor typeAccessor;
@@ -53,8 +53,10 @@ public class ApplicationLinkServiceImpl implements ApplicationLinkService {
      * @param typeAccessor           the type accessor
      */
     @Inject
-    public ApplicationLinkServiceImpl(@ComponentImport MutatingApplicationLinkService mutatingApplicationLinkService,
-                                      @ComponentImport TypeAccessor typeAccessor) {
+    public ApplicationLinksServiceImpl(
+            @ComponentImport MutatingApplicationLinkService mutatingApplicationLinkService,
+            @ComponentImport TypeAccessor typeAccessor) {
+
         this.mutatingApplicationLinkService = mutatingApplicationLinkService;
         this.typeAccessor = typeAccessor;
     }
@@ -64,11 +66,17 @@ public class ApplicationLinkServiceImpl implements ApplicationLinkService {
      *
      * @return the application links
      */
-    public List<ApplicationLinkBean> getApplicationLinks() {
-        Iterable<ApplicationLink> applicationLinksIterable = mutatingApplicationLinkService.getApplicationLinks();
-        return StreamSupport.stream(applicationLinksIterable.spliterator(), false)
+    public ApplicationLinksBean getApplicationLinks() {
+        final Iterable<ApplicationLink> applicationLinksIterable = mutatingApplicationLinkService.getApplicationLinks();
+        final List<ApplicationLinkBean> applicationLinkBeans = StreamSupport.stream(applicationLinksIterable.spliterator(), false)
                 .map(ApplicationLinkBeanUtil::toApplicationLinkBean)
                 .collect(Collectors.toList());
+        return new ApplicationLinksBean(applicationLinkBeans);
+    }
+
+    @Override
+    public ApplicationLinksBean setApplicationLinks(ApplicationLinksBean applicationLinksBean) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     /**
@@ -78,7 +86,7 @@ public class ApplicationLinkServiceImpl implements ApplicationLinkService {
      * @param linkBean the link bean
      * @return the added application ,link
      */
-    public ApplicationLinkBean addApplicationLink(ApplicationLinkBean linkBean) {
+    public ApplicationLinksBean addApplicationLink(ApplicationLinkBean linkBean) {
         //preparations
         validate(linkBean);
 
@@ -110,7 +118,7 @@ public class ApplicationLinkServiceImpl implements ApplicationLinkService {
             throw new BadRequestException(e.getMessage());
         }
 
-        return ApplicationLinkBeanUtil.toApplicationLinkBean(applicationLink);
+        return getApplicationLinks();
     }
 
     private ApplicationType buildApplicationType(ApplicationLinkTypes linkType) {
@@ -128,7 +136,7 @@ public class ApplicationLinkServiceImpl implements ApplicationLinkService {
             case CROWD:
                 return typeAccessor.getApplicationType(CrowdApplicationType.class);
             default:
-                throw new NotImplementedException("application type '" + linkType + "' not implemented");
+                throw new UnsupportedOperationException("application type '" + linkType + "' not implemented");
         }
     }
 }

@@ -2,48 +2,40 @@ package de.aservo.atlassian.jira.confapi.rest;
 
 import com.atlassian.application.api.ApplicationKey;
 import com.atlassian.jira.license.LicenseDetails;
+import com.sun.jersey.spi.container.ResourceFilters;
 import de.aservo.atlassian.confapi.constants.ConfAPI;
 import de.aservo.atlassian.confapi.model.LicenseBean;
 import de.aservo.atlassian.confapi.model.LicensesBean;
 import de.aservo.atlassian.confapi.rest.api.LicensesResource;
-import de.aservo.atlassian.jira.confapi.helper.JiraWebAuthenticationHelper;
+import de.aservo.atlassian.jira.confapi.filter.SysadminOnlyResourceFilter;
 import de.aservo.atlassian.jira.confapi.service.JiraApplicationHelper;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Path(ConfAPI.LICENSES)
+@ResourceFilters(SysadminOnlyResourceFilter.class)
 @Produces(MediaType.APPLICATION_JSON)
 @Component
 public class LicensesResourceImpl implements LicensesResource {
 
     private final JiraApplicationHelper applicationHelper;
 
-    private final JiraWebAuthenticationHelper webAuthenticationHelper;
-
     @Inject
     public LicensesResourceImpl(
-            final JiraApplicationHelper applicationHelper,
-            final JiraWebAuthenticationHelper webAuthenticationHelper) {
+            final JiraApplicationHelper applicationHelper) {
 
         this.applicationHelper = applicationHelper;
-        this.webAuthenticationHelper = webAuthenticationHelper;
     }
 
     @Override
     public Response getLicenses() {
-        webAuthenticationHelper.mustBeSysAdmin();
-
         final Collection<LicenseBean> licenseBeans = applicationHelper.getLicenses().stream()
                 .map(this::createLicenseBean)
                 .collect(Collectors.toList());
@@ -52,14 +44,20 @@ public class LicensesResourceImpl implements LicensesResource {
     }
 
     @Override
-    public Response setLicense(
-            @QueryParam("clear") @DefaultValue("false") boolean clear,
-            @Nonnull final String licenseKey) throws WebApplicationException {
+    public Response setLicenses(LicensesBean licensesBean) {
+        // TODO: Only clear before setting the first one
+        licensesBean.getLicenses().forEach(
+                l -> applicationHelper.setLicense(l.getKey(), false)
+        );
 
-        webAuthenticationHelper.mustBeSysAdmin();
+        return getLicenses();
+    }
 
-        final LicenseDetails licenseDetails = applicationHelper.setLicense(licenseKey, clear);
-        return Response.ok(createLicenseBean(licenseDetails)).build();
+    @Override
+    public Response addLicense(LicenseBean licenseBean) {
+        applicationHelper.setLicense(licenseBean.getKey(), false);
+        // TODO: Do we really want to return ALL licenses here?
+        return getLicenses();
     }
 
     protected LicenseBean createLicenseBean(

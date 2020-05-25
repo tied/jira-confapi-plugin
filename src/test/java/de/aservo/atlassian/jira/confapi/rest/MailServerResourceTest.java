@@ -19,7 +19,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -49,7 +49,6 @@ public class MailServerResourceTest {
     @Test
     public void testGetSmtpMailServer() {
         final SMTPMailServer smtpMailServer = new DefaultTestSmtpMailServerImpl();
-        doReturn(true).when(mailServerManager).isDefaultSMTPMailServerDefined();
         doReturn(smtpMailServer).when(mailServerManager).getDefaultSMTPMailServer();
 
         final Response response = mailServerResource.getMailServerSmtp();
@@ -70,9 +69,6 @@ public class MailServerResourceTest {
 
     @Test
     public void testGetSmtpMailServerNoContent() {
-        doReturn(false).when(mailServerManager).isDefaultSMTPMailServerDefined();
-        doReturn(null).when(mailServerManager).getDefaultSMTPMailServer();
-
         final Response response = mailServerResource.getMailServerSmtp();
         final ErrorCollection bean = (ErrorCollection) response.getEntity();
 
@@ -101,9 +97,6 @@ public class MailServerResourceTest {
 
     @Test
     public void testPutSmtpMaiLServerCreate() throws Exception {
-        doReturn(false).when(mailServerManager).isDefaultSMTPMailServerDefined();
-        doReturn(null).when(mailServerManager).getDefaultSMTPMailServer();
-
         final SMTPMailServer createSmtpMailServer = new DefaultTestSmtpMailServerImpl();
         final MailServerSmtpBean requestMailServerSmtpBean = MailServerSmtpBeanUtil.toMailServerSmtpBean(createSmtpMailServer);
         final Response response = mailServerResource.setMailServerSmtp(requestMailServerSmtpBean);
@@ -119,9 +112,6 @@ public class MailServerResourceTest {
 
     @Test
     public void testPutSmtpMaiLServerWithoutPort() throws Exception {
-        doReturn(false).when(mailServerManager).isDefaultSMTPMailServerDefined();
-        doReturn(null).when(mailServerManager).getDefaultSMTPMailServer();
-
         final SMTPMailServer createSmtpMailServer = new DefaultTestSmtpMailServerImpl();
         createSmtpMailServer.setPort(null);
 
@@ -139,8 +129,6 @@ public class MailServerResourceTest {
 
     @Test
     public void testPutSmtpMaiLServerException() throws Exception {
-        doReturn(false).when(mailServerManager).isDefaultSMTPMailServerDefined();
-        doReturn(null).when(mailServerManager).getDefaultSMTPMailServer();
         doThrow(new MailException("SMTP test exception")).when(mailServerManager).create(any());
 
         final SMTPMailServer createSmtpMailServer = new DefaultTestSmtpMailServerImpl();
@@ -172,8 +160,6 @@ public class MailServerResourceTest {
 
     @Test
     public void testGetPopMailServerNoContent() {
-        doReturn(null).when(mailServerManager).getDefaultPopMailServer();
-
         final Response response = mailServerResource.getMailServerPop();
         final ErrorCollection responseErrorCollection = (ErrorCollection) response.getEntity();
 
@@ -201,8 +187,6 @@ public class MailServerResourceTest {
 
     @Test
     public void testPutPopMaiLServerCreate() throws Exception {
-        doReturn(null).when(mailServerManager).getDefaultPopMailServer();
-
         final PopMailServer createPopMailServer = new DefaultTestPopMailServerImpl();
         final MailServerPopBean requestMailServerPopBean = MailServerPopBeanUtil.toMailServerPopBean(createPopMailServer);
         final Response response = mailServerResource.setMailServerPop(requestMailServerPopBean);
@@ -221,8 +205,6 @@ public class MailServerResourceTest {
 
     @Test
     public void testPutPopMaiLServerWithoutPort() throws Exception {
-        doReturn(null).when(mailServerManager).getDefaultPopMailServer();
-
         final PopMailServer createPopMailServer = new DefaultTestPopMailServerImpl();
         createPopMailServer.setPort(null);
 
@@ -240,7 +222,6 @@ public class MailServerResourceTest {
 
     @Test
     public void testPutPopMaiLServerException() throws Exception {
-        doReturn(null).when(mailServerManager).getDefaultPopMailServer();
         doThrow(new MailException("POP test exception")).when(mailServerManager).create(any());
 
         final PopMailServer createPopMailServer = new DefaultTestPopMailServerImpl();

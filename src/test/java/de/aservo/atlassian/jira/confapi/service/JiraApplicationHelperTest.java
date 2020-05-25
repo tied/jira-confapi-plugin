@@ -1,11 +1,8 @@
 package de.aservo.atlassian.jira.confapi.service;
 
-import com.atlassian.jira.application.ApplicationKeys;
 import com.atlassian.jira.bc.license.JiraLicenseService;
 import com.atlassian.jira.license.JiraLicenseManager;
 import com.atlassian.jira.license.LicenseDetails;
-import com.atlassian.jira.license.LicensedApplications;
-import com.atlassian.jira.license.MockLicensedApplications;
 import com.atlassian.jira.mock.MockApplicationProperties;
 import com.atlassian.jira.util.ErrorCollection;
 import com.atlassian.jira.util.I18nHelper;
@@ -19,7 +16,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -53,12 +50,6 @@ public class JiraApplicationHelperTest {
 
     @Before
     public void setup() {
-        final LicensedApplications licensedApplications = new MockLicensedApplications(ApplicationKeys.CORE);
-
-        mockLicenseDetail = mock(LicenseDetails.class);
-        when(mockLicenseDetail.getLicenseString()).thenReturn(LICENSE);
-        when(mockLicenseDetail.getLicensedApplications()).thenReturn(licensedApplications);
-
         applicationHelper = new JiraApplicationHelper(
                 new MockApplicationProperties(),
                 new MockI18nBean.MockI18nBeanFactory(),
@@ -154,10 +145,8 @@ public class JiraApplicationHelperTest {
     public void testSetLicenseNotValid() {
         final JiraLicenseService.ValidationResult mockValidationResult = mock(JiraLicenseService.ValidationResult.class);
         when(mockValidationResult.getErrorCollection()).thenReturn(new SimpleErrorCollection("License not valid", ErrorCollection.Reason.VALIDATION_FAILED));
-        when(mockValidationResult.getLicenseString()).thenReturn(LICENSE);
 
         when(licenseService.validate(any(I18nHelper.class), anyString())).thenReturn(mockValidationResult);
-        when(licenseManager.setLicenseNoEvent(mockValidationResult.getLicenseString())).thenReturn(mockLicenseDetail);
 
         expectedException.expect(IllegalArgumentException.class);
         applicationHelper.setLicense("AAA...", false);
