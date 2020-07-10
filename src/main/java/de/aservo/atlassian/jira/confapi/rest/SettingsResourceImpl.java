@@ -1,10 +1,11 @@
 package de.aservo.atlassian.jira.confapi.rest;
 
-import com.atlassian.jira.rest.api.util.ErrorCollection;
+import com.sun.jersey.spi.container.ResourceFilters;
 import de.aservo.atlassian.confapi.constants.ConfAPI;
+import de.aservo.atlassian.confapi.model.ErrorCollection;
 import de.aservo.atlassian.confapi.model.SettingsBean;
 import de.aservo.atlassian.confapi.rest.api.SettingsResource;
-import de.aservo.atlassian.jira.confapi.helper.JiraWebAuthenticationHelper;
+import de.aservo.atlassian.jira.confapi.filter.SysadminOnlyResourceFilter;
 import de.aservo.atlassian.jira.confapi.service.JiraApplicationHelper;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path(ConfAPI.SETTINGS)
+@ResourceFilters(SysadminOnlyResourceFilter.class)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Component
@@ -23,21 +25,15 @@ public class SettingsResourceImpl implements SettingsResource {
 
     private final JiraApplicationHelper applicationHelper;
 
-    private final JiraWebAuthenticationHelper webAuthenticationHelper;
-
     @Inject
     public SettingsResourceImpl(
-            final JiraApplicationHelper applicationHelper,
-            final JiraWebAuthenticationHelper webAuthenticationHelper) {
+            final JiraApplicationHelper applicationHelper) {
 
         this.applicationHelper = applicationHelper;
-        this.webAuthenticationHelper = webAuthenticationHelper;
     }
 
     @Override
     public Response getSettings() {
-        webAuthenticationHelper.mustBeSysAdmin();
-
         final SettingsBean settingsBean = new SettingsBean();
         settingsBean.setTitle(applicationHelper.getTitle());
         settingsBean.setBaseUrl(applicationHelper.getBaseUrl());
@@ -47,8 +43,6 @@ public class SettingsResourceImpl implements SettingsResource {
     @Override
     public Response setSettings(
             final SettingsBean settingsBean) {
-
-        webAuthenticationHelper.mustBeSysAdmin();
 
         final ErrorCollection errorCollection = ErrorCollection.of();
 
@@ -76,7 +70,10 @@ public class SettingsResourceImpl implements SettingsResource {
             }
         }
 
-        return Response.ok(errorCollection).build();
+        final SettingsBean result = new SettingsBean();
+        result.setTitle(applicationHelper.getTitle());
+        result.setBaseUrl(applicationHelper.getBaseUrl());
+        return Response.ok(result).build();
     }
 
 }

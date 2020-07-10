@@ -5,7 +5,7 @@ import com.atlassian.mail.server.PopMailServer;
 import de.aservo.atlassian.confapi.model.MailServerPopBean;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.*;
 

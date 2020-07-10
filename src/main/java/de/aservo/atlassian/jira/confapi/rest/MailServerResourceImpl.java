@@ -8,11 +8,13 @@ import com.atlassian.mail.server.SMTPMailServer;
 import com.atlassian.mail.server.impl.PopMailServerImpl;
 import com.atlassian.mail.server.impl.SMTPMailServerImpl;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
+import com.sun.jersey.spi.container.ResourceFilters;
 import de.aservo.atlassian.confapi.constants.ConfAPI;
 import de.aservo.atlassian.confapi.model.ErrorCollection;
 import de.aservo.atlassian.confapi.model.MailServerPopBean;
 import de.aservo.atlassian.confapi.model.MailServerSmtpBean;
 import de.aservo.atlassian.confapi.rest.api.MailServerResource;
+import de.aservo.atlassian.jira.confapi.filter.SysadminOnlyResourceFilter;
 import de.aservo.atlassian.jira.confapi.model.util.MailServerPopBeanUtil;
 import de.aservo.atlassian.jira.confapi.model.util.MailServerSmtpBeanUtil;
 import de.aservo.atlassian.jira.confapi.util.MailProtocolUtil;
@@ -30,6 +32,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path(ConfAPI.MAIL_SERVER)
+@ResourceFilters(SysadminOnlyResourceFilter.class)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Component
