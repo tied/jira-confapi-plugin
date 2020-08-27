@@ -1,7 +1,5 @@
 package de.aservo.atlassian.jira.confapi.filter;
 
-import com.atlassian.crowd.manager.permission.UserPermissionService;
-import com.atlassian.crowd.model.permission.UserPermission;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import com.atlassian.plugins.rest.common.security.AuthenticationRequiredException;
 import com.atlassian.plugins.rest.common.security.AuthorisationException;
@@ -26,22 +24,16 @@ public class SysadminOnlyResourceFilter implements ResourceFilter, ContainerRequ
     @ComponentImport
     private final UserManager userManager;
 
-    @ComponentImport
-    private final UserPermissionService userPermissionService;
-
     /**
      * Instantiates a new Sysadmin only resource filter.
      *
      * @param userManager           the user manager
-     * @param userPermissionService the user permission service
      */
     @Inject
     public SysadminOnlyResourceFilter(
-            final UserManager userManager,
-            final UserPermissionService userPermissionService) {
+            final UserManager userManager) {
 
         this.userManager = userManager;
-        this.userPermissionService = userPermissionService;
     }
 
     public ContainerRequestFilter getRequestFilter() {
@@ -59,17 +51,11 @@ public class SysadminOnlyResourceFilter implements ResourceFilter, ContainerRequ
 
         if (loggedInUser == null) {
             throw new AuthenticationRequiredException();
-        } else if (!isSystemAdministrator(loggedInUser)) {
+        } else if (!userManager.isSystemAdmin(loggedInUser.getUserKey())) {
             throw new AuthorisationException("Client must be authenticated as an system administrator to access this resource.");
         }
 
         return containerRequest;
-    }
-
-    public boolean isSystemAdministrator(
-            final UserProfile userProfile) {
-
-        return userPermissionService.hasPermission(userProfile.getUsername(), UserPermission.SYS_ADMIN);
     }
 
 }

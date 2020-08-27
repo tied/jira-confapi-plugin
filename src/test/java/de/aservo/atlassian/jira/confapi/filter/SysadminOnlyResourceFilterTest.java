@@ -1,8 +1,8 @@
 package de.aservo.atlassian.jira.confapi.filter;
 
-import com.atlassian.crowd.manager.permission.UserPermissionService;
 import com.atlassian.plugins.rest.common.security.AuthenticationRequiredException;
 import com.atlassian.plugins.rest.common.security.AuthorisationException;
+import com.atlassian.sal.api.user.UserKey;
 import com.atlassian.sal.api.user.UserManager;
 import com.atlassian.sal.api.user.UserProfile;
 import org.junit.Before;
@@ -23,14 +23,11 @@ public class SysadminOnlyResourceFilterTest {
     @Mock
     private UserManager userManager;
 
-    @Mock
-    private UserPermissionService userPermissionService;
-
     private SysadminOnlyResourceFilter sysadminOnlyResourceFilter;
 
     @Before
     public void setup() {
-        sysadminOnlyResourceFilter = new SysadminOnlyResourceFilter(userManager, userPermissionService);
+        sysadminOnlyResourceFilter = new SysadminOnlyResourceFilter(userManager);
     }
 
     @Test
@@ -48,7 +45,6 @@ public class SysadminOnlyResourceFilterTest {
     public void testNonSysadminAccess() {
         final UserProfile userProfile = mock(UserProfile.class);
         doReturn(userProfile).when(userManager).getRemoteUser();
-        doReturn(false).when(userPermissionService).hasPermission(any(), any());
 
         sysadminOnlyResourceFilter.filter(null);
     }
@@ -56,8 +52,9 @@ public class SysadminOnlyResourceFilterTest {
     @Test
     public void testSysadminAccess() {
         final UserProfile userProfile = mock(UserProfile.class);
+        doReturn(new UserKey("user")).when(userProfile).getUserKey();
         doReturn(userProfile).when(userManager).getRemoteUser();
-        doReturn(true).when(userPermissionService).hasPermission(any(), any());
+        doReturn(true).when(userManager).isSystemAdmin(any(UserKey.class));
 
         assertNull(sysadminOnlyResourceFilter.filter(null));
     }
