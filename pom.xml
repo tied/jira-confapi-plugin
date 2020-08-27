@@ -11,9 +11,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.aservo.atlassian</groupId>
-    <artifactId>jira-confapi-plugin</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <artifactId>confapi-jira-plugin</artifactId>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>atlassian-plugin</packaging>
 
     <name>ConfAPI for Jira</name>
@@ -29,13 +28,13 @@
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/aservo/jira-confapi-plugin/issues</url>
+        <url>https://github.com/aservo/confapi-jira-plugin/issues</url>
     </issueManagement>
 
     <scm>
-        <connection>scm:git:git://github.com/aservo/jira-confapi-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:aservo/jira-confapi-plugin.git</developerConnection>
-        <url>https://github.com/aservo/jira-confapi-plugin</url>
+        <connection>scm:git:git://github.com/aservo/confapi-jira-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:aservo/confapi-jira-plugin.git</developerConnection>
+        <url>https://github.com/aservo/confapi-jira-plugin</url>
     </scm>
 
     <developers>
