@@ -4,8 +4,8 @@ info:
   title: ConfAPI for Jira
   description: This plugin provides methods for accessing configuration for Jira.
   contact:
-    url: https://github.com/aservo/jira-confapi-plugin
-    email: github@aservo.com
+    url: https://github.com/aservo/confapi-jira-plugin
+    email: opensource@aservo.com
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
