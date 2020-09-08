@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<atlassian-plugin-marketing>
+    <compatibility>
+        <product name="jira" min="8.0.0" max="8.8.1"/>
+    </compatibility>
+    <logo image="images/aservo.png"/>
+</atlassian-plugin-marketing>
