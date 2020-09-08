@@ -3,7 +3,7 @@
         <description>${project.description}</description>
         <version>${project.version}</version>
         <vendor name="${project.organization.name}" url="${project.organization.url}" />
-        <param name="plugin-icon">images/aservo.png</param>
+        <param name="plugin-icon">images/plugin-logo.png</param>
         <param name="plugin-logo">images/aservo.png</param>
     </plugin-info>
 
