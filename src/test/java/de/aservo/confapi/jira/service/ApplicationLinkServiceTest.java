@@ -9,12 +9,11 @@ import com.atlassian.applinks.spi.link.ApplicationLinkDetails;
 import com.atlassian.applinks.spi.link.MutatingApplicationLinkService;
 import com.atlassian.applinks.spi.manifest.ManifestNotFoundException;
 import com.atlassian.applinks.spi.util.TypeAccessor;
-import de.aservo.atlassian.confapi.model.ApplicationLinkBean;
-import de.aservo.atlassian.confapi.model.ApplicationLinksBean;
-import de.aservo.atlassian.confapi.model.type.ApplicationLinkTypes;
+import de.aservo.confapi.commons.model.ApplicationLinkBean;
+import de.aservo.confapi.commons.model.ApplicationLinksBean;
+import de.aservo.confapi.commons.model.type.ApplicationLinkTypes;
 import de.aservo.confapi.jira.model.type.DefaultAuthenticationScenario;
 import de.aservo.confapi.jira.model.util.ApplicationLinkBeanUtil;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -57,7 +56,7 @@ public class ApplicationLinkServiceTest {
 
         ApplicationLinksBean applicationLinks = applicationLinkService.getApplicationLinks();
 
-        Assert.assertEquals(applicationLinks.getApplicationLinks().iterator().next(), ApplicationLinkBeanUtil.toApplicationLinkBean(applicationLink));
+        assertEquals(applicationLinks.getApplicationLinks().iterator().next(), ApplicationLinkBeanUtil.toApplicationLinkBean(applicationLink));
     }
 
     @Test
@@ -70,13 +69,10 @@ public class ApplicationLinkServiceTest {
         doReturn(applicationLink).when(mutatingApplicationLinkService).createApplicationLink(
                 any(ApplicationType.class), any(ApplicationLinkDetails.class));
         doReturn(new DefaultApplicationType()).when(typeAccessor).getApplicationType(any());
-        doReturn(Collections.singletonList(applicationLink)).when(mutatingApplicationLinkService).getApplicationLinks();
 
-        ApplicationLinksBean applicationLinkResponse = applicationLinkService.addApplicationLink(applicationLinkBean);
+        ApplicationLinkBean applicationLinkResponse = applicationLinkService.addApplicationLink(applicationLinkBean, false);
 
-        assertEquals(applicationLinkResponse.getApplicationLinks().iterator().next().getName(), applicationLinkBean.getName());
-        // TODO: Of course not equal
-        assertNotEquals(applicationLinkResponse, applicationLinkBean);
+        assertEquals(applicationLinkResponse.getName(), applicationLinkBean.getName());
     }
 
     @Test
@@ -88,13 +84,10 @@ public class ApplicationLinkServiceTest {
                 any(ApplicationType.class), any(ApplicationLinkDetails.class));
         doReturn(applicationLink).when(mutatingApplicationLinkService).getPrimaryApplicationLink(any());
         doReturn(new DefaultApplicationType()).when(typeAccessor).getApplicationType(any());
-        doReturn(Collections.singletonList(applicationLink)).when(mutatingApplicationLinkService).getApplicationLinks();
 
-        ApplicationLinksBean applicationLinkResponse = applicationLinkService.addApplicationLink(applicationLinkBean);
+        ApplicationLinkBean applicationLinkResponse = applicationLinkService.addApplicationLink(applicationLinkBean, false);
 
-        assertEquals(applicationLinkResponse.getApplicationLinks().iterator().next().getName(), applicationLinkBean.getName());
-        // TODO: Of course not equal
-        assertNotEquals(applicationLinkResponse, applicationLinkBean);
+        assertEquals(applicationLinkResponse.getName(), applicationLinkBean.getName());
     }
 
     @Test(expected = ValidationException.class)
@@ -102,7 +95,7 @@ public class ApplicationLinkServiceTest {
         ApplicationLinkBean applicationLinkBean = createApplicationLinkBean();
         applicationLinkBean.setLinkType(null);
 
-        applicationLinkService.addApplicationLink(applicationLinkBean);
+        applicationLinkService.addApplicationLink(applicationLinkBean, false);
     }
 
     @Test
@@ -115,13 +108,10 @@ public class ApplicationLinkServiceTest {
             doReturn(applicationLink).when(mutatingApplicationLinkService).createApplicationLink(
                     any(ApplicationType.class), any(ApplicationLinkDetails.class));
             doReturn(new DefaultApplicationType()).when(typeAccessor).getApplicationType(any());
-            doReturn(Collections.singletonList(applicationLink)).when(mutatingApplicationLinkService).getApplicationLinks();
 
-            ApplicationLinksBean applicationLinkResponse = applicationLinkService.addApplicationLink(applicationLinkBean);
+            ApplicationLinkBean applicationLinkResponse = applicationLinkService.addApplicationLink(applicationLinkBean, false);
 
-            assertEquals(applicationLinkResponse.getApplicationLinks().iterator().next().getName(), applicationLinkBean.getName());
-            // TODO: Of course not equal
-            // TODO: assertEquals(applicationLinkResponse.getLinkType(), applicationLink.getType());
+            assertEquals(applicationLink.getName(), applicationLinkBean.getName());
         }
     }
 

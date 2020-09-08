@@ -6,7 +6,7 @@
     <parent>
         <groupId>de.aservo</groupId>
         <artifactId>parent-pom</artifactId>
-        <version>0.0.9</version>
+        <version>0.0.11</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -53,7 +53,7 @@
         <atlassian.amps.version>8.0.2</atlassian.amps.version>
         <atlassian.plugin.key>${project.groupId}.${project.artifactId}</atlassian.plugin.key>
         <atlassian.spring.scanner.version>2.1.5</atlassian.spring.scanner.version>
-        <confapi-commons.version>0.0.6-SNAPSHOT</confapi-commons.version>
+        <confapi-commons.version>0.0.18-SNAPSHOT</confapi-commons.version>
         <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
         <javax.el-api.version>2.2.4</javax.el-api.version>
     </properties>
@@ -88,7 +88,7 @@
         <!-- compile dependencies -->
 
         <dependency>
-            <groupId>de.aservo.atlassian</groupId>
+            <groupId>de.aservo</groupId>
             <artifactId>confapi-commons</artifactId>
             <version>${confapi-commons.version}</version>
             <scope>compile</scope>
@@ -229,7 +229,7 @@
         <!-- test dependencies -->
 
         <dependency>
-            <groupId>de.aservo.atlassian</groupId>
+            <groupId>de.aservo</groupId>
             <artifactId>confapi-commons</artifactId>
             <version>${confapi-commons.version}</version>
             <type>test-jar</type>
@@ -355,7 +355,7 @@
                 <configuration>
                     <openapiFilePath>${basedir}/src/main/resources/openapi.yaml</openapiFilePath>
                     <resourcePackages>
-                        <resourcePackage>de.aservo.atlassian.jira.confapi.rest</resourcePackage>
+                        <resourcePackage>de.aservo.confapi.jira.rest</resourcePackage>
                     </resourcePackages>
                     <outputPath>${project.build.directory}</outputPath>
                     <outputFormat>YAML</outputFormat>

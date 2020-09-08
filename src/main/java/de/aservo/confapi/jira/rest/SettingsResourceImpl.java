@@ -1,10 +1,10 @@
 package de.aservo.confapi.jira.rest;
 
 import com.sun.jersey.spi.container.ResourceFilters;
-import de.aservo.atlassian.confapi.constants.ConfAPI;
-import de.aservo.atlassian.confapi.model.ErrorCollection;
-import de.aservo.atlassian.confapi.model.SettingsBean;
-import de.aservo.atlassian.confapi.rest.api.SettingsResource;
+import de.aservo.confapi.commons.constants.ConfAPI;
+import de.aservo.confapi.commons.model.ErrorCollection;
+import de.aservo.confapi.commons.model.SettingsBean;
+import de.aservo.confapi.commons.rest.api.SettingsResource;
 import de.aservo.confapi.jira.filter.SysadminOnlyResourceFilter;
 import de.aservo.confapi.jira.service.JiraApplicationHelper;
 import org.springframework.stereotype.Component;
@@ -15,6 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URI;
 
 @Path(ConfAPI.SETTINGS)
 @ResourceFilters(SysadminOnlyResourceFilter.class)
@@ -48,7 +49,7 @@ public class SettingsResourceImpl implements SettingsResource {
 
         if (settingsBean.getBaseUrl() != null) {
             try {
-                applicationHelper.setBaseUrl(settingsBean.getBaseUrl());
+                applicationHelper.setBaseUrl(URI.create(settingsBean.getBaseUrl()).toString());
             } catch (Exception e) {
                 errorCollection.addErrorMessage(e.getMessage());
             }

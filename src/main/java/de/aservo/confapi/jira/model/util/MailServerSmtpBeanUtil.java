@@ -1,7 +1,7 @@
 package de.aservo.confapi.jira.model.util;
 
 import com.atlassian.mail.server.SMTPMailServer;
-import de.aservo.atlassian.confapi.model.MailServerSmtpBean;
+import de.aservo.confapi.commons.model.MailServerSmtpBean;
 
 import javax.annotation.Nullable;
 

@@ -1,7 +1,7 @@
 package de.aservo.confapi.jira.rest;
 
 import com.atlassian.jira.rest.api.util.ErrorCollection;
-import de.aservo.atlassian.confapi.model.SettingsBean;
+import de.aservo.confapi.commons.model.SettingsBean;
 import de.aservo.confapi.jira.helper.MockJiraApplicationHelper;
 import de.aservo.confapi.jira.service.JiraApplicationHelper;
 import org.apache.commons.lang3.StringUtils;
@@ -74,7 +74,7 @@ public class SettingsResourceTest {
     }
 
     @Test
-    @Ignore
+    @Ignore("Currently not causing any exceptions")
     public void testSetSettingsCausingExceptions() {
         final String baseUrl = "thisUrlIsNotValid";
         final String mode = "INVALID";

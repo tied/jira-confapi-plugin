@@ -15,11 +15,11 @@ import com.atlassian.applinks.spi.manifest.ManifestNotFoundException;
 import com.atlassian.applinks.spi.util.TypeAccessor;
 import com.atlassian.plugin.spring.scanner.annotation.export.ExportAsService;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
-import de.aservo.atlassian.confapi.exception.BadRequestException;
-import de.aservo.atlassian.confapi.model.ApplicationLinkBean;
-import de.aservo.atlassian.confapi.model.ApplicationLinksBean;
-import de.aservo.atlassian.confapi.model.type.ApplicationLinkTypes;
-import de.aservo.atlassian.confapi.service.api.ApplicationLinksService;
+import de.aservo.confapi.commons.exception.BadRequestException;
+import de.aservo.confapi.commons.model.ApplicationLinkBean;
+import de.aservo.confapi.commons.model.ApplicationLinksBean;
+import de.aservo.confapi.commons.model.type.ApplicationLinkTypes;
+import de.aservo.confapi.commons.service.api.ApplicationLinksService;
 import de.aservo.confapi.jira.model.type.DefaultAuthenticationScenario;
 import de.aservo.confapi.jira.model.util.ApplicationLinkBeanUtil;
 import org.slf4j.Logger;
@@ -27,12 +27,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static de.aservo.atlassian.confapi.util.BeanValidationUtil.validate;
+import static de.aservo.confapi.commons.util.BeanValidationUtil.validate;
 
 /**
  * The type Application link service.
@@ -75,7 +76,7 @@ public class ApplicationLinksServiceImpl implements ApplicationLinksService {
     }
 
     @Override
-    public ApplicationLinksBean setApplicationLinks(ApplicationLinksBean applicationLinksBean) {
+    public ApplicationLinksBean setApplicationLinks(@NotNull ApplicationLinksBean applicationLinksBean, boolean b) {
         throw new UnsupportedOperationException("Not implemented");
     }
 
@@ -86,11 +87,11 @@ public class ApplicationLinksServiceImpl implements ApplicationLinksService {
      * @param linkBean the link bean
      * @return the added application ,link
      */
-    public ApplicationLinksBean addApplicationLink(ApplicationLinkBean linkBean) {
+    public ApplicationLinkBean addApplicationLink(@NotNull ApplicationLinkBean linkBean, boolean b) {
         //preparations
         validate(linkBean);
 
-        ApplicationLinkDetails linkDetails = null;
+        ApplicationLinkDetails linkDetails;
         try {
             linkDetails = ApplicationLinkBeanUtil.toApplicationLinkDetails(linkBean);
         } catch (URISyntaxException e) {
@@ -109,7 +110,7 @@ public class ApplicationLinksServiceImpl implements ApplicationLinksService {
         }
 
         //add new application link
-        ApplicationLink applicationLink = null;
+        ApplicationLink applicationLink;
         try {
             applicationLink = mutatingApplicationLinkService.createApplicationLink(applicationType, linkDetails);
             mutatingApplicationLinkService.configureAuthenticationForApplicationLink(applicationLink,
@@ -118,7 +119,7 @@ public class ApplicationLinksServiceImpl implements ApplicationLinksService {
             throw new BadRequestException(e.getMessage());
         }
 
-        return getApplicationLinks();
+        return ApplicationLinkBeanUtil.toApplicationLinkBean(applicationLink);
     }
 
     private ApplicationType buildApplicationType(ApplicationLinkTypes linkType) {

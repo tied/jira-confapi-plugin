@@ -1,7 +1,7 @@
 package de.aservo.confapi.jira.model.util;
 
 import com.atlassian.mail.server.PopMailServer;
-import de.aservo.atlassian.confapi.model.MailServerPopBean;
+import de.aservo.confapi.commons.model.MailServerPopBean;
 
 import javax.annotation.Nullable;
 
