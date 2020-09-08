@@ -1,7 +1,7 @@
 package it.de.aservo.confapi.jira.rest;
 
-import de.aservo.atlassian.confapi.constants.ConfAPI;
-import de.aservo.atlassian.confapi.model.SettingsBean;
+import de.aservo.confapi.commons.constants.ConfAPI;
+import de.aservo.confapi.commons.model.SettingsBean;
 import it.de.aservo.confapi.jira.rest.client.ClientApplication;
 import org.apache.wink.client.ClientConfig;
 import org.apache.wink.client.RestClient;

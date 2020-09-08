@@ -8,10 +8,10 @@ import com.atlassian.mail.MailException;
 import com.atlassian.mail.server.MailServerManager;
 import com.atlassian.mail.server.PopMailServer;
 import com.atlassian.mail.server.SMTPMailServer;
-import de.aservo.atlassian.confapi.constants.ConfAPI;
-import de.aservo.atlassian.confapi.model.ErrorCollection;
-import de.aservo.atlassian.confapi.model.MailServerPopBean;
-import de.aservo.atlassian.confapi.model.MailServerSmtpBean;
+import de.aservo.confapi.commons.constants.ConfAPI;
+import de.aservo.confapi.commons.model.ErrorCollection;
+import de.aservo.confapi.commons.model.MailServerPopBean;
+import de.aservo.confapi.commons.model.MailServerSmtpBean;
 import de.aservo.confapi.jira.model.util.MailServerPopBeanUtil;
 import de.aservo.confapi.jira.model.util.MailServerSmtpBeanUtil;
 import org.junit.Before;
@@ -24,7 +24,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import static de.aservo.atlassian.confapi.junit.ResourceAssert.assertResourcePath;
+import static de.aservo.confapi.commons.junit.ResourceAssert.assertResourcePath;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 

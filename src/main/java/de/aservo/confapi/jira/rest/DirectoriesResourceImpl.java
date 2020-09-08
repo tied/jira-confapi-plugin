@@ -1,9 +1,9 @@
 package de.aservo.confapi.jira.rest;
 
 import com.sun.jersey.spi.container.ResourceFilters;
-import de.aservo.atlassian.confapi.constants.ConfAPI;
-import de.aservo.atlassian.confapi.rest.AbstractDirectoriesResourceImpl;
-import de.aservo.atlassian.confapi.service.api.DirectoryService;
+import de.aservo.confapi.commons.constants.ConfAPI;
+import de.aservo.confapi.commons.rest.AbstractDirectoriesResourceImpl;
+import de.aservo.confapi.commons.service.api.DirectoryService;
 import de.aservo.confapi.jira.filter.SysadminOnlyResourceFilter;
 import org.springframework.stereotype.Component;
 

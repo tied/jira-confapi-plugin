@@ -2,7 +2,7 @@ package de.aservo.confapi.jira.model.util;
 
 import atlassian.mail.server.DefaultTestSmtpMailServerImpl;
 import com.atlassian.mail.server.SMTPMailServer;
-import de.aservo.atlassian.confapi.model.MailServerSmtpBean;
+import de.aservo.confapi.commons.model.MailServerSmtpBean;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;

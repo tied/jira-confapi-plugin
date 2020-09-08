@@ -5,17 +5,20 @@ import com.atlassian.crowd.embedded.api.Directory;
 import com.atlassian.crowd.exception.DirectoryCurrentlySynchronisingException;
 import com.atlassian.plugin.spring.scanner.annotation.export.ExportAsService;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
-import de.aservo.atlassian.confapi.exception.InternalServerErrorException;
-import de.aservo.atlassian.confapi.model.DirectoryBean;
-import de.aservo.atlassian.confapi.service.api.DirectoryService;
-import de.aservo.atlassian.confapi.util.BeanValidationUtil;
+import de.aservo.confapi.commons.exception.InternalServerErrorException;
+import de.aservo.confapi.commons.model.AbstractDirectoryBean;
+import de.aservo.confapi.commons.model.DirectoriesBean;
+import de.aservo.confapi.commons.model.DirectoryCrowdBean;
+import de.aservo.confapi.commons.service.api.DirectoryService;
+import de.aservo.confapi.commons.util.BeanValidationUtil;
 import de.aservo.confapi.jira.model.util.DirectoryBeanUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import java.util.List;
+import javax.validation.constraints.NotNull;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -34,11 +37,14 @@ public class DirectoryServiceImpl implements DirectoryService {
         this.crowdDirectoryService = checkNotNull(crowdDirectoryService);
     }
 
-    public List<DirectoryBean> getDirectories() {
-        return crowdDirectoryService.findAllDirectories().stream().map(DirectoryBeanUtil::toDirectoryBean).collect(Collectors.toList());
+    public DirectoriesBean getDirectories() {
+        return new DirectoriesBean(crowdDirectoryService.findAllDirectories().stream().map(DirectoryBeanUtil::toDirectoryBean).collect(Collectors.toList()));
     }
 
-    public DirectoryBean setDirectory(DirectoryBean directoryBean, boolean testConnection) {
+    public DirectoriesBean setDirectories(
+            DirectoriesBean directoriesBean, boolean testConnection) {
+
+        DirectoryCrowdBean directoryBean = (DirectoryCrowdBean) directoriesBean.getDirectories().iterator().next();
 
         //preps and validation
         BeanValidationUtil.validate(directoryBean);
@@ -62,7 +68,12 @@ public class DirectoryServiceImpl implements DirectoryService {
         }
 
         //add new directory
-        return DirectoryBeanUtil.toDirectoryBean(crowdDirectoryService.addDirectory(directory));
+        return new DirectoriesBean(Collections.singletonList(DirectoryBeanUtil.toDirectoryBean(crowdDirectoryService.addDirectory(directory))));
+    }
+
+    @Override
+    public AbstractDirectoryBean addDirectory(@NotNull AbstractDirectoryBean abstractDirectoryBean, boolean b) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
 }
